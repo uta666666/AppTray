@@ -250,3 +250,5 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+/MyGridLauncher/Views/Behaviors/MenuItemClickBehavior.cs
+/MyGridLauncher/Views/Behaviors/MenuItemClickBehavior.cs
