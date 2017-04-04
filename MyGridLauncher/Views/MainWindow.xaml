@@ -60,6 +60,10 @@
         </CompositeCollection>
         <ContextMenu x:Key="SystemMenu" ItemsSource="{Binding Source={StaticResource SystemMenuItems}}" />-->
 
+        <SolidColorBrush x:Key="NavigaterActiveColor" Color="Blue" />
+        <SolidColorBrush x:Key="NavigaterDeActiveColor" Color="Black" />
+        <SolidColorBrush x:Key="NavigaterStrokeColor" Color="DimGray" />
+
         <!--  通常時のボタンの色  -->
         <SolidColorBrush x:Key="NormalTextBlockBrash" Color="WhiteSmoke" />
         <!--  通常時のボタンの色  -->
@@ -666,6 +670,44 @@
                         <b:DragStartBehavior AllowedEffects="Move" DragDropData="25" />
                     </i:Interaction.Behaviors>
                 </Button>
+                <Grid
+                    HorizontalAlignment="Center"
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="3">
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Visibility="{Binding PageNavigatorVisibility}">
+                        <i:Interaction.Behaviors>
+                            <b:PageNavigateBehavior PageCount="{Binding PageCount}"
+                                                    CurrentPageCount="{Binding CurrentPageNo}"/>
+                        </i:Interaction.Behaviors>
+                        <!--<Rectangle
+                            Width="40"
+                            Height="10"
+                            Stroke="{StaticResource NavigaterStrokeColor}"
+                            Fill="{StaticResource NavigaterActiveColor}"
+                            RadiusX="10"
+                            RadiusY="10"
+                            Margin="10"/>
+                        <Rectangle
+                            Width="40"
+                            Height="10"
+                            Stroke="{StaticResource NavigaterStrokeColor}"
+                            Fill="{StaticResource NavigaterDeActiveColor}"
+                            RadiusX="10"
+                            RadiusY="10"
+                            Margin="10"/>
+                        <Rectangle
+                            Width="40"
+                            Height="10"
+                            Stroke="{StaticResource NavigaterStrokeColor}"
+                            Fill="{StaticResource NavigaterDeActiveColor}"
+                            RadiusX="10"
+                            RadiusY="10"
+                            Margin="10"/>-->
+                    </StackPanel>
+                </Grid>
             </Grid>
         </Grid>
     </Border>

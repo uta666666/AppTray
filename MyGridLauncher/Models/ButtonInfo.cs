@@ -201,5 +201,17 @@ namespace MyToolsLauncher.Models {
                 return null;
             }
         }
+
+        public int PageCount {
+            get {
+                return _maxPageCount;
+            }
+        }
+
+        public int CurrentPageNo {
+            get {
+                return _currentPageNo;
+            }
+        }
     }
 }

@@ -94,6 +94,7 @@
     <Compile Include="ViewModels\SystemSettingViewModel.cs" />
     <Compile Include="Views\Behaviors\CloseWindowAttachedBehavior.cs" />
     <Compile Include="Views\Behaviors\ExecuteSelectedAppBehavior.cs" />
+    <Compile Include="Views\Behaviors\PageNavigateBehavior.cs" />
     <Compile Include="Views\Behaviors\SearchBehavior.cs" />
     <Compile Include="Views\Behaviors\ShortcutBehavior.cs" />
     <Compile Include="Views\Converters\ApplicationInfoForAutoCompleteConverter.cs" />

@@ -15,6 +15,7 @@ using System.Windows.Media;
 using Livet.Messaging;
 using System.Windows.Controls;
 using System.Globalization;
+using System.Threading;
 
 namespace MyToolsLauncher.ViewModels {
     public class MainViewModel : BindableBase {
@@ -24,6 +25,7 @@ namespace MyToolsLauncher.ViewModels {
         public MainViewModel() {
             //管理者アイコン取得
             ShieldImage = ShieldIcon.GetBitmapSource(true);
+            PageNavigatorVisibility = Visibility.Collapsed;
 
             //登録情報取得
             _buttonInfo = new ButtonInfo(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location));
@@ -158,16 +160,22 @@ namespace MyToolsLauncher.ViewModels {
                     _buttonInfo.PreviousPage();
                 }
                 RaisePropertyChanged(nameof(ButtonInfo));
+
+                RaisePropertyChanged(nameof(CurrentPageNo));
             });
 
             AddPageCommand = new RelayCommand(() => {
                 _buttonInfo.AddPage();
                 RaisePropertyChanged(nameof(ButtonInfo));
+                RaisePropertyChanged(nameof(PageCount));
+                RaisePropertyChanged(nameof(CurrentPageNo));
             });
 
             DeletePageCommand = new RelayCommand(() => {
                 _buttonInfo.DeletePage();
                 RaisePropertyChanged(nameof(ButtonInfo));
+                RaisePropertyChanged(nameof(PageCount));
+                RaisePropertyChanged(nameof(CurrentPageNo));
             });
         }
 
@@ -311,6 +319,28 @@ namespace MyToolsLauncher.ViewModels {
             }
             set {
                 SetProperty(ref _shortcuts, value);
+            }
+        }
+
+        private Visibility _pageNavigatorVisibility = Visibility.Visible;
+        public Visibility PageNavigatorVisibility {
+            get {
+                return _pageNavigatorVisibility;
+            }
+            set {
+                SetProperty(ref _pageNavigatorVisibility, value);
+            }
+        }
+
+        public int PageCount {
+            get {
+                return _buttonInfo.PageCount;
+            }
+        }
+
+        public int CurrentPageNo {
+            get {
+                return _buttonInfo.CurrentPageNo;
             }
         }
 
