@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace MyToolsLauncher.Commons {
+namespace AppTray.Commons {
     public class BindableBase : ViewModel, INotifyPropertyChanged{
         public new event PropertyChangedEventHandler PropertyChanged;
 

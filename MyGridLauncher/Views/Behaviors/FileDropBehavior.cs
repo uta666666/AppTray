@@ -9,9 +9,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interactivity;
-using MyToolsLauncher.Commons;
+using AppTray.Commons;
 
-namespace MyToolsLauncher.Views.Behaviors {
+namespace AppTray.Views.Behaviors {
     public class FileDropBehavior : Behavior<Button> {
         public ICommand FileDropCommand {
             get { return (ICommand)GetValue(FileDropCommandProperty); }

@@ -1,4 +1,4 @@
-﻿using MyToolsLauncher.Models;
+﻿using AppTray.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace MyToolsLauncher.Views.Converters {
+namespace AppTray.Views.Converters {
     public class ImageSourceMultiBindConverter : IMultiValueConverter {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
             if (!(values[0] is ButtonInfo && values[1] is string)) {

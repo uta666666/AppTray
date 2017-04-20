@@ -1,4 +1,4 @@
-﻿using MyToolsLauncher.ViewModels;
+﻿using AppTray.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interactivity;
-using MyToolsLauncher.Views;
+using AppTray.Views;
 using System.Windows.Controls;
-using MyToolsLauncher.Commons;
+using AppTray.Commons;
 
-namespace MyToolsLauncher.Views.Behaviors {
+namespace AppTray.Views.Behaviors {
     public sealed class DragAcceptBehavior : Behavior<Grid> {
         public DragAcceptDescription Description {
             get { return (DragAcceptDescription)GetValue(DescriptionProperty); }

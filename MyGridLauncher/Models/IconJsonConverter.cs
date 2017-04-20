@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace MyToolsLauncher.Models {
+namespace AppTray.Models {
     public class IconJsonConverter : JsonConverter {
         public override bool CanConvert(Type objectType) {
             return typeof(Icon).IsAssignableFrom(objectType);

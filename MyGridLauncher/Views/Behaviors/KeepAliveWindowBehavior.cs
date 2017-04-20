@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interactivity;
-using MyToolsLauncher.Models;
+using AppTray.Models;
 
-namespace MyToolsLauncher.Views.Behaviors {
+namespace AppTray.Views.Behaviors {
     public class KeepAliveWindowBehavior : Behavior<Window> {
         public bool CanCloseWindow {
             get { return (bool)GetValue(CanCloseWindowProperty); }

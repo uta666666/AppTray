@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace MyToolsLauncher.Commons {
+namespace AppTray.Commons {
     public class RelayCommand : ICommand {
         private readonly Action _execute;
         private readonly Func<bool> _canExecute;

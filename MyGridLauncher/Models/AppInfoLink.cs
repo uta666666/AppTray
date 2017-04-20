@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace MyToolsLauncher.Models {
+namespace AppTray.Models {
     public class AppInfoLink : AppInfo {
 
         public AppInfoLink(string filePath) : base() {

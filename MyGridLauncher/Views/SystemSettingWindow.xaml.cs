@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace MyToolsLauncher.Views {
+namespace AppTray.Views {
     /// <summary>
     /// SystemSettingWindow.xaml の相互作用ロジック
     /// </summary>

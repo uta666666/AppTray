@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using MyToolsLauncher.Commons;
+using AppTray.Commons;
 using System.Drawing;
-using MyToolsLauncher.Models;
+using AppTray.Models;
 using System.Windows.Media.Imaging;
 using System.Windows;
 using System.Diagnostics;
@@ -17,7 +17,7 @@ using System.Windows.Controls;
 using System.Globalization;
 using System.Threading;
 
-namespace MyToolsLauncher.ViewModels {
+namespace AppTray.ViewModels {
     public class MainViewModel : BindableBase {
         /// <summary>
         /// 

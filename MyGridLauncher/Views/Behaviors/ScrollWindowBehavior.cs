@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
-namespace MyToolsLauncher.Views.Behaviors {
+namespace AppTray.Views.Behaviors {
     public class ScrollWindowBehavior : Behavior<Window> {
         public ICommand ScrollCommand {
             get { return (ICommand)GetValue(ScrollCommandProperty); }

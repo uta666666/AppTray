@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MyToolsLauncher.Properties {
+namespace AppTray.Properties {
 
 
     /// <summary>

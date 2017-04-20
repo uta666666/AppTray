@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
-namespace MyToolsLauncher.Views.Behaviors {
+namespace AppTray.Views.Behaviors {
     public class ExecuteSelectedAppBehavior : Behavior<AutoCompleteBox> {
         public ICommand Command {
             get { return (ICommand)GetValue(CommandProperty); }

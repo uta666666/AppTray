@@ -1,4 +1,4 @@
-﻿using MyToolsLauncher.Commons;
+﻿using AppTray.Commons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace MyToolsLauncher.ViewModels {
+namespace AppTray.ViewModels {
     public sealed class DragAcceptDescription {
         public event Action<DragEventArgs> DragOver;
 

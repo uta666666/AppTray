@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace MyToolsLauncher.Models {
+namespace AppTray.Models {
     public static class ShieldIcon {
         const UInt32 SHGSI_ICON = 0x000000100;
         const UInt32 SHGSI_SMALLICON = 0x000000001;

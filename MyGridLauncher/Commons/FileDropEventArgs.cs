@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyToolsLauncher.Commons {
+namespace AppTray.Commons {
     public class FileDropParameter {
         public int ButtonNo { get; set; }
 

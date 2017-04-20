@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace MyToolsLauncher.Models {
+namespace AppTray.Models {
     public class ButtonInfo : IEnumerable<KeyValuePair<int, AppInfo>> {
         public ButtonInfo(string directory) {
             _currentPageNo = 1;

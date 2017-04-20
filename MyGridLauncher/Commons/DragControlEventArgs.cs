@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace MyToolsLauncher.Commons {
+namespace AppTray.Commons {
     public class DragControlEventArgs : RoutedEventArgs {
         public DragControlEventArgs(DragEventArgs e, int toButtonNo) {
             DragEvent = e;

@@ -10,7 +10,7 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using Newtonsoft.Json;
 
-namespace MyToolsLauncher.Models {
+namespace AppTray.Models {
     public class AppInfo {
         public AppInfo() { }
 

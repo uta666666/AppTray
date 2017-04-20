@@ -1,5 +1,5 @@
-﻿using MyToolsLauncher.Commons;
-using MyToolsLauncher.Models;
+﻿using AppTray.Commons;
+using AppTray.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -7,10 +7,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
-namespace MyToolsLauncher.ViewModels {
+namespace AppTray.ViewModels {
     public class SettingViewModel : BindableBase {
         public SettingViewModel() {
             OKCommand = new RelayCommand(() => {
@@ -22,11 +23,18 @@ namespace MyToolsLauncher.ViewModels {
                 IsUpdate = false;
                 CanClose = true;//キャンセルは常にtrue
             });
+
+            WindowCloseCommand = new RelayCommand<Window>((w) => {
+                IsUpdate = false;
+                CanClose = true;
+            });
         }
 
         public ICommand OKCommand { get; set; }
 
         public ICommand CancelCommand { get; set; }
+
+        public ICommand WindowCloseCommand { get; set; }
 
         private AppInfo _appInfo;
 

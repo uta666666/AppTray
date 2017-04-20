@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace MyToolsLauncher.Views.Behaviors {
+namespace AppTray.Views.Behaviors {
     public class PageNavigateBehavior : Behavior<StackPanel> {
         public int PageCount {
             get { return (int)GetValue(PageCountProperty); }
@@ -53,7 +53,7 @@ namespace MyToolsLauncher.Views.Behaviors {
             for (int i = 0; i < behavior.PageCount; i++) {
                 var rectangle = behavior.AssociatedObject.Children[i] as Rectangle;
                 if (i == behavior.CurrentPageCount - 1) {
-                    rectangle.Fill = new SolidColorBrush(Colors.Blue);
+                    rectangle.Fill = new SolidColorBrush(Colors.MediumBlue);
                 } else {
                     rectangle.Fill = new SolidColorBrush(Colors.Black);
                 }
@@ -101,7 +101,7 @@ namespace MyToolsLauncher.Views.Behaviors {
 
         private static Rectangle MakeRectangle() {
             return new Rectangle() {
-                Width = 40,
+                Width = 20,
                 Height = 10,
                 RadiusX = 5,
                 RadiusY = 5,

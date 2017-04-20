@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
-namespace MyToolsLauncher.Views.Behaviors {
+namespace AppTray.Views.Behaviors {
     public class ShowWindowBehavior : Behavior<Window> {
         public double Top {
             get { return (double)GetValue(TopProperty); }
@@ -38,7 +38,17 @@ namespace MyToolsLauncher.Views.Behaviors {
         }
 
         private void AssociatedObject_Loaded(object sender, RoutedEventArgs e) {
-            AssociatedObject.WindowState = WindowState.Minimized;
+            //AssociatedObject.WindowState = WindowState.Minimized;
+
+            System.Drawing.Point dp = System.Windows.Forms.Cursor.Position;
+            System.Windows.Point wp = new System.Windows.Point(dp.X, dp.Y);
+            // マウス座標から論理座標に変換
+            PresentationSource src = PresentationSource.FromVisual(AssociatedObject);
+            System.Windows.Media.CompositionTarget ct = src.CompositionTarget;
+            System.Windows.Point p = ct.TransformFromDevice.Transform(wp);
+            Left = p.X - (AssociatedObject.Width / 2);
+            double diff = p.Y - SystemParameters.WorkArea.Height;
+            Top = p.Y - AssociatedObject.Height - diff;
         }
 
         private void AssociatedObject_StateChanged(object sender, EventArgs e) {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interactivity;
 
-namespace MyToolsLauncher.Views.Behaviors {
+namespace AppTray.Views.Behaviors {
     public class CloseWindowAttachedBehavior : Behavior<Window> {
         public bool CanClose {
             get { return (bool)GetValue(CanCloseProperty); }

@@ -1,10 +1,10 @@
-﻿using MyToolsLauncher.Commons;
+﻿using AppTray.Commons;
 using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
-namespace MyToolsLauncher.Views.Behaviors {
+namespace AppTray.Views.Behaviors {
     public class DragStartBehavior : Behavior<FrameworkElement> {
         private Point _origin;
         private bool _isButtonDown;

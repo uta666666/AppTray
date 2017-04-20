@@ -1,4 +1,4 @@
-﻿using MyToolsLauncher.Commons;
+﻿using AppTray.Commons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
-namespace MyToolsLauncher.Views.Behaviors {
+namespace AppTray.Views.Behaviors {
     public class ShortcutBehavior : Behavior<Window> {
         public Dictionary<KeyData, ICommand> ShortcutCommand {
             get { return (Dictionary<KeyData, ICommand>)GetValue(ShortcutCommandProperty); }

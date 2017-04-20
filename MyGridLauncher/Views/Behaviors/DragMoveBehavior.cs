@@ -12,7 +12,7 @@ using System.Windows.Interactivity;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace MyToolsLauncher.Views.Behaviors {
+namespace AppTray.Views.Behaviors {
     public class DragMoveBehavior : Behavior<System.Windows.Controls.Grid> {
         protected override void OnAttached() {
             base.OnAttached();

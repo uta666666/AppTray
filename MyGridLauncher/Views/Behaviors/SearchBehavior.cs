@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
-namespace MyToolsLauncher.Views.Behaviors {
+namespace AppTray.Views.Behaviors {
     public class SearchBehavior : Behavior<Window> {
         public string InputControlName {
             get { return (string)GetValue(InputControlNameProperty); }

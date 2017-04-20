@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyToolsLauncher.Commons {
+namespace AppTray.Commons {
     public static class IEnumerableExtensions {
         private sealed class CommonSelector<T, TKey> : IEqualityComparer<T> {
             private Func<T, TKey> _selector;

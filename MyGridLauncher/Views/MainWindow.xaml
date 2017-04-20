@@ -1,15 +1,15 @@
 ﻿<Window
-    x:Class="MyToolsLauncher.MainWindow"
+    x:Class="AppTray.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:b="clr-namespace:MyToolsLauncher.Views.Behaviors"
-    xmlns:c="clr-namespace:MyToolsLauncher.Views.Converters"
+    xmlns:b="clr-namespace:AppTray.Views.Behaviors"
+    xmlns:c="clr-namespace:AppTray.Views.Converters"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
-    xmlns:local="clr-namespace:MyToolsLauncher.Views"
+    xmlns:local="clr-namespace:AppTray.Views"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
-    xmlns:vm="clr-namespace:MyToolsLauncher.ViewModels"
+    xmlns:vm="clr-namespace:AppTray.ViewModels"
     x:Name="MainWindow1"
     Title="Launcher"
     Width="400"
@@ -682,30 +682,6 @@
                             <b:PageNavigateBehavior PageCount="{Binding PageCount}"
                                                     CurrentPageCount="{Binding CurrentPageNo}"/>
                         </i:Interaction.Behaviors>
-                        <!--<Rectangle
-                            Width="40"
-                            Height="10"
-                            Stroke="{StaticResource NavigaterStrokeColor}"
-                            Fill="{StaticResource NavigaterActiveColor}"
-                            RadiusX="10"
-                            RadiusY="10"
-                            Margin="10"/>
-                        <Rectangle
-                            Width="40"
-                            Height="10"
-                            Stroke="{StaticResource NavigaterStrokeColor}"
-                            Fill="{StaticResource NavigaterDeActiveColor}"
-                            RadiusX="10"
-                            RadiusY="10"
-                            Margin="10"/>
-                        <Rectangle
-                            Width="40"
-                            Height="10"
-                            Stroke="{StaticResource NavigaterStrokeColor}"
-                            Fill="{StaticResource NavigaterDeActiveColor}"
-                            RadiusX="10"
-                            RadiusY="10"
-                            Margin="10"/>-->
                     </StackPanel>
                 </Grid>
             </Grid>
