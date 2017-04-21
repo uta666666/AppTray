@@ -17,7 +17,7 @@
     AllowsTransparency="True"
     Background="Transparent"
     FocusManager.FocusedElement="{Binding ElementName=button1}"
-    Icon="/MyToolsLauncher;component/main.ico"
+    Icon="/AppTray;component/main.ico"
     Left="{Binding Left, Mode=TwoWay}"
     Top="{Binding Top, Mode=TwoWay}"
     WindowStyle="None">

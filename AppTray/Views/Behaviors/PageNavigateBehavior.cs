@@ -53,7 +53,7 @@ namespace AppTray.Views.Behaviors {
             for (int i = 0; i < behavior.PageCount; i++) {
                 var rectangle = behavior.AssociatedObject.Children[i] as Rectangle;
                 if (i == behavior.CurrentPageCount - 1) {
-                    rectangle.Fill = new SolidColorBrush(Colors.MediumBlue);
+                    rectangle.Fill = new SolidColorBrush(Colors.Blue);
                 } else {
                     rectangle.Fill = new SolidColorBrush(Colors.Black);
                 }
@@ -107,7 +107,7 @@ namespace AppTray.Views.Behaviors {
                 RadiusY = 5,
                 Margin = new Thickness(10),
                 Fill = new SolidColorBrush(Colors.Black),
-                Stroke = new SolidColorBrush(Colors.DimGray)
+                Stroke = new SolidColorBrush(Colors.White)
             };
         }
     }

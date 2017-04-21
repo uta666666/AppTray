@@ -5,20 +5,19 @@
     xmlns:b="clr-namespace:AppTray.Views.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:local="clr-namespace:AppTray.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:AppTray.ViewModels"
     Title="設定"
     Width="339"
     Height="332"
-    Icon="/MyToolsLauncher;component/main.ico"
+    Icon="/AppTray;component/main.ico"
     ResizeMode="NoResize"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d"
     WindowStyle="None"
     x:Name="Setting">
     <Window.DataContext>
-        <vm:SettingViewModel />
+        <vm:SettingViewModel/>
     </Window.DataContext>
     <i:Interaction.Behaviors>
         <b:CloseWindowAttachedBehavior CanClose="{Binding CanClose}" />
