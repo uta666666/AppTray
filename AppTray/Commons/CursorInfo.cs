@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Runtime.InteropServices;
 
-namespace AppTray.Views {
+namespace AppTray.Commons {
     public class CursorInfo {
         [DllImport("user32.dll")]
         private static extern void GetCursorPos(out POINT pt);

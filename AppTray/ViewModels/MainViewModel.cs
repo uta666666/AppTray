@@ -77,6 +77,36 @@ namespace AppTray.ViewModels {
                     DeletePageCommand
                 },
             };
+
+            //SystemMenu
+            SystemMenuItems = new List<SystemMenuItem>() {
+                new SystemMenuItem() {
+                    MenuID = 0x0001,
+                    MenuName = "新しいページを追加",
+                    Command = AddPageCommand
+                },
+                new SystemMenuItem(){
+                    MenuID = 0x0002,
+                    MenuName = "現在のページを削除",
+                    Command = DeletePageCommand
+                },
+                new SystemMenuItem() {
+                    MenuID = 0x0003,
+                    MenuName = "前ページ",
+                    Command = new RelayCommand(() => {
+                        _buttonInfo.PreviousPage();
+                        RaisePropertyChanged(nameof(ButtonInfo));
+                    })
+                },
+                new SystemMenuItem(){
+                    MenuID = 0x0004,
+                    MenuName = "次ページ",
+                    Command = new RelayCommand(() => {
+                        _buttonInfo.NextPage();
+                        RaisePropertyChanged(nameof(ButtonInfo));
+                    })
+                }
+            };
         }
 
         private void CreateCommand() {
@@ -329,6 +359,16 @@ namespace AppTray.ViewModels {
             }
             set {
                 SetProperty(ref _pageNavigatorVisibility, value);
+            }
+        }
+
+        private List<SystemMenuItem> _systemMenuItems;
+        public List<SystemMenuItem> SystemMenuItems {
+            get {
+                return _systemMenuItems;
+            }
+            set {
+                SetProperty(ref _systemMenuItems, value);
             }
         }
 

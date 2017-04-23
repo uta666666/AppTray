@@ -2,7 +2,7 @@
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace AppTray.Views {
+namespace AppTray.Commons {
     public class DragGhost : Adorner {
 
         protected UIElement ghost;

@@ -35,27 +35,20 @@
             <Setter Property="Command" Value="{Binding ApplicationCloseCommand, Mode=TwoWay}" />
             <Setter Property="CommandParameter" Value="{Binding ElementName=MainWindow1, Mode=TwoWay}" />
             <Setter Property="Background" Value="AliceBlue" />
-        </Style>
+        </Style>-->
 
-        -->
         <!--  タイトルバー用のコンテキストメニュー  -->
-        <!--
-        <CompositeCollection x:Key="SystemMenuItems" x:Shared="False">
-            <MenuItem Header="Help" InputGestureText="F1">
-        -->
-        <!--<MenuItem.Icon>
-                        <Image Source="Help.png" Height="16"/>
-                    </MenuItem.Icon>-->
-        <!--
-            </MenuItem>
+        
+        <!--<CompositeCollection x:Key="SystemMenuItems" x:Shared="False">
+            <MenuItem Header="Help" InputGestureText="F1"></MenuItem>
             <MenuItem Header="アプリケーション設定" />
-            <MenuItem Header="新しいページ" />
+            <MenuItem Header="新しいページ" Command="vm:MyCommands.MenuItemClickCommand" IsEnabled="True" />
             <MenuItem Header="現在のページを削除" />
             <Separator />
             <MenuItem Header="Exit">
-                <i:Interaction.Behaviors>
+                --><!--<i:Interaction.Behaviors>
                     <b:MenuItemClickBehavior Command="{Binding ApplicationCloseCommand, Mode=TwoWay}" Parameter="{Binding ElementName=MainWindow1}" />
-                </i:Interaction.Behaviors>
+                </i:Interaction.Behaviors>--><!--
             </MenuItem>
         </CompositeCollection>
         <ContextMenu x:Key="SystemMenu" ItemsSource="{Binding Source={StaticResource SystemMenuItems}}" />-->
@@ -195,7 +188,7 @@
         <b:SearchBehavior InputControlName="{Binding Name, ElementName=textBoxSearch}" />
         <b:ScrollWindowBehavior MiddleClickCommand="{Binding AddPageCommand}" ScrollCommand="{Binding MovePageCommand}" />
         <b:ShortcutBehavior ShortcutCommand="{Binding Shortcuts}" />
-        <!--<b:ShowSystemContextMenuBehavior SystemContextMenu="{DynamicResource SystemMenu}" />-->
+        <b:ShowSystemContextMenuBehavior MenuItems="{Binding SystemMenuItems}" />
     </i:Interaction.Behaviors>
     <Border BorderBrush="DimGray" BorderThickness="1">
         <Grid Background="Black" Opacity="0.8">
@@ -270,17 +263,17 @@
                 Background="Black"
                 Foreground="DimGray"
                 Opacity="0.8">
-                <MenuItem Header="ファイル">
-                    <!--<MenuItem Header="設定"
+                <!--<MenuItem Header="ファイル">
+                    --><!--<MenuItem Header="設定"
                         Foreground="{StaticResource MenuItemForegroundBrush}"/>
-                    <Separator />-->
+                    <Separator />--><!--
                     <MenuItem
                         Command="{Binding ApplicationCloseCommand}"
                         CommandParameter="{Binding ElementName=MainWindow1}"
                         Foreground="{StaticResource MenuItemForegroundBrush}"
                         Header="閉じる"
                         InputGestureText="Alt+F4" />
-                </MenuItem>
+                </MenuItem>-->
                 <MenuItem Header="ページ">
                     <MenuItem
                         Command="{Binding MovePageCommand}"

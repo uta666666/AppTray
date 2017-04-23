@@ -88,6 +88,7 @@
     </ApplicationDefinition>
     <Compile Include="Commons\IEnumerableExtensions.cs" />
     <Compile Include="Commons\KeyData.cs" />
+    <Compile Include="Commons\SystemMenuItem.cs" />
     <Compile Include="Models\AppInfoExe.cs" />
     <Compile Include="Models\AppInfoLink.cs" />
     <Compile Include="ViewModels\SettingViewModel.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="Views\Behaviors\PageNavigateBehavior.cs" />
     <Compile Include="Views\Behaviors\SearchBehavior.cs" />
     <Compile Include="Views\Behaviors\ShortcutBehavior.cs" />
+    <Compile Include="Views\Behaviors\ShowSystemContextMenuBehavior.cs" />
     <Compile Include="Views\Converters\ApplicationInfoForAutoCompleteConverter.cs" />
     <Compile Include="Views\SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
@@ -121,9 +123,9 @@
     <Compile Include="Views\Converters\ApplicationNameMultiBindConverter.cs" />
     <Compile Include="Views\Converters\ContextMenuEnableMultiBindConverter.cs" />
     <Compile Include="Views\Converters\ImageSourceMultiBindConverter.cs" />
-    <Compile Include="Views\CursorInfo.cs" />
+    <Compile Include="Commons\CursorInfo.cs" />
     <Compile Include="Commons\DragControlEventArgs.cs" />
-    <Compile Include="Views\DragGhost.cs" />
+    <Compile Include="Commons\DragGhost.cs" />
     <Compile Include="Commons\FileDropEventArgs.cs" />
     <Compile Include="Commons\GlobalExclusionnfo.cs" />
     <Compile Include="Commons\RelayCommand.cs" />
