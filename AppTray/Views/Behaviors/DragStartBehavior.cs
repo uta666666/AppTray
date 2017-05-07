@@ -1,8 +1,10 @@
 ﻿using AppTray.Commons;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interactivity;
+using System.Windows.Media;
 
 namespace AppTray.Views.Behaviors {
     public class DragStartBehavior : Behavior<FrameworkElement> {
@@ -23,6 +25,27 @@ namespace AppTray.Views.Behaviors {
         }
 
         public static readonly DependencyProperty DragDropDataProperty = DependencyProperty.Register("DragDropData", typeof(object), typeof(DragStartBehavior), new PropertyMetadata(null));
+
+        public int ZIndex {
+            get { return (int)GetValue(ZIndexProperty); }
+            set { SetValue(ZIndexProperty, value); }
+        }
+
+        public static readonly DependencyProperty ZIndexProperty = DependencyProperty.Register(nameof(ZIndex), typeof(int), typeof(DragStartBehavior), new PropertyMetadata(null));
+
+        public Control DummyDragControl {
+            get { return (Control)GetValue(DummyDragControlProperty); }
+            set { SetValue(DummyDragControlProperty, value); }
+        }
+
+        public static readonly DependencyProperty DummyDragControlProperty = DependencyProperty.Register(nameof(DummyDragControl), typeof(Control), typeof(DragStartBehavior), new PropertyMetadata(null));
+
+        public int DragedButtonNo {
+            get { return (int)GetValue(DragedButtonNoProperty); }
+            set { SetValue(DragedButtonNoProperty, value); }
+        }
+
+        public static readonly DependencyProperty DragedButtonNoProperty = DependencyProperty.Register(nameof(DragedButtonNo), typeof(int), typeof(DragStartBehavior), new PropertyMetadata(null));
 
         protected override void OnAttached() {
             AssociatedObject.PreviewMouseDown += AssociatedObject_PreviewMouseDown;
@@ -50,9 +73,13 @@ namespace AppTray.Views.Behaviors {
             var point = e.GetPosition(AssociatedObject);
             if (CheckDistance(point, _origin)) {
                 GlobalExclusionInfo.IsDragDroping = true;
+                ZIndex = 1;
                 try {
                     if (_dragGhost == null) {
-                        _dragGhost = new DragGhost(sender as UIElement, 0.5, e.GetPosition(sender as UIElement));
+                        var c = sender as Control;
+                        DragedButtonNo = int.Parse(c.Tag.ToString());
+
+                        _dragGhost = new DragGhost(sender as UIElement, 0.5, e.GetPosition(sender as UIElement), DummyDragControl);
                         _dragGhost.Show();
                     }
                     DragDrop.DoDragDrop(AssociatedObject, DragDropData, AllowedEffects);

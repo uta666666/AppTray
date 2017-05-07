@@ -9,10 +9,10 @@ namespace AppTray.Commons {
         protected Vector movement;
         protected bool isRendering;
 
-        public DragGhost(UIElement draggedElement, double opacity)
-            : this(draggedElement, opacity, new Point(0, 0)) { }
+        public DragGhost(UIElement draggedElement, double opacity, UIElement dummyElement)
+            : this(draggedElement, opacity, new Point(0, 0), dummyElement) { }
 
-        public DragGhost(UIElement draggedElement, double opacity, Point clicked)
+        public DragGhost(UIElement draggedElement, double opacity, Point clicked, UIElement dummyElement)
             : base(draggedElement) {
             isRendering = false;
 
@@ -23,7 +23,7 @@ namespace AppTray.Commons {
             var rect = new System.Windows.Shapes.Rectangle() { Width = b.Width, Height = b.Height };
 
             // rectを指定の透過度のdraggedElementで塗りつぶすブラシ
-            var brush = new VisualBrush(draggedElement) { Opacity = opacity };
+            var brush = new VisualBrush(dummyElement) { Opacity = opacity };
 
             // rectに　ブラシを適用
             rect.Fill = brush;

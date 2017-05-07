@@ -38,7 +38,7 @@
         </Style>-->
 
         <!--  タイトルバー用のコンテキストメニュー  -->
-        
+
         <!--<CompositeCollection x:Key="SystemMenuItems" x:Shared="False">
             <MenuItem Header="Help" InputGestureText="F1"></MenuItem>
             <MenuItem Header="アプリケーション設定" />
@@ -46,9 +46,11 @@
             <MenuItem Header="現在のページを削除" />
             <Separator />
             <MenuItem Header="Exit">
-                --><!--<i:Interaction.Behaviors>
+        -->
+        <!--<i:Interaction.Behaviors>
                     <b:MenuItemClickBehavior Command="{Binding ApplicationCloseCommand, Mode=TwoWay}" Parameter="{Binding ElementName=MainWindow1}" />
-                </i:Interaction.Behaviors>--><!--
+                </i:Interaction.Behaviors>-->
+        <!--
             </MenuItem>
         </CompositeCollection>
         <ContextMenu x:Key="SystemMenu" ItemsSource="{Binding Source={StaticResource SystemMenuItems}}" />-->
@@ -264,9 +266,11 @@
                 Foreground="DimGray"
                 Opacity="0.8">
                 <!--<MenuItem Header="ファイル">
-                    --><!--<MenuItem Header="設定"
+                -->
+                <!--<MenuItem Header="設定"
                         Foreground="{StaticResource MenuItemForegroundBrush}"/>
-                    <Separator />--><!--
+                    <Separator />-->
+                <!--
                     <MenuItem
                         Command="{Binding ApplicationCloseCommand}"
                         CommandParameter="{Binding ElementName=MainWindow1}"
@@ -318,6 +322,78 @@
                     <RowDefinition Height="80*" />
                     <RowDefinition Height="80*" />
                 </Grid.RowDefinitions>
+                <Rectangle
+                    Grid.Row="0"
+                    Grid.RowSpan="5"
+                    Width="40"
+                    Height="400"
+                    HorizontalAlignment="Left"
+                    Panel.ZIndex="{Binding ZIndex}"
+                    Fill="Black"
+                    Opacity="0.1"
+                    Stroke="Black">
+                    <i:Interaction.Behaviors>
+                        <b:ChangePageBehavior
+                            Command="{Binding MovePageCommand}"
+                            IsNext="{StaticResource BoolFalse}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
+                    </i:Interaction.Behaviors>
+                </Rectangle>
+                <Rectangle
+                    Grid.Row="0"
+                    Grid.RowSpan="5"
+                    Grid.Column="4"
+                    Width="40"
+                    Height="400"
+                    HorizontalAlignment="Right"
+                    Panel.ZIndex="{Binding ZIndex}"
+                    Fill="Black"
+                    Opacity="0.1"
+                    Stroke="Black">
+                    <i:Interaction.Behaviors>
+                        <b:ChangePageBehavior
+                            Command="{Binding MovePageCommand}"
+                            IsNext="{StaticResource BoolTrue}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
+                    </i:Interaction.Behaviors>
+                </Rectangle>
+                <WrapPanel
+                    x:Name="dummyPanel"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Width="80"
+                    Height="80"
+                    Visibility="Hidden">
+                    <Button x:Name="dummyButton">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border
+                                    Name="HoverButtonBorder"
+                                    Background="{StaticResource NormalBackgroundBrush}"
+                                    BorderBrush="{StaticResource NormalButtonBrush}"
+                                    BorderThickness="1">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="33" />
+                                        </Grid.RowDefinitions>
+                                        <Image
+                                            Grid.Row="0"
+                                            Margin="0,5,0,2"
+                                            Source="{Binding DragedButtonImage}"
+                                            Stretch="Uniform" />
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Margin="2,0,2,0"
+                                            Foreground="{StaticResource NormalTextBlockBrash}"
+                                            Text="{Binding DragedButtonText}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </WrapPanel>
                 <Button
                     x:Name="button1"
                     Grid.Column="0"
@@ -328,7 +404,12 @@
                     Tag="1">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="1" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="1" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="1"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -341,7 +422,12 @@
                     Tag="2">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="2" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="2" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="2"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -354,7 +440,12 @@
                     Tag="3">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="3" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="3" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="3"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -367,7 +458,12 @@
                     Tag="4">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="4" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="4" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="4"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -380,7 +476,12 @@
                     Tag="5">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="5" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="5" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="5"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -394,7 +495,12 @@
                     Tag="6">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="6" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="6" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="6"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -408,7 +514,12 @@
                     Tag="7">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="7" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="7" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="7"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -422,7 +533,12 @@
                     Tag="8">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="8" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="8" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="8"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -436,7 +552,12 @@
                     Tag="9">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="9" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="9" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="9"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -450,7 +571,12 @@
                     Tag="10">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="10" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="10" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="10"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -464,7 +590,12 @@
                     Tag="11">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="11" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="11" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="11"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -478,7 +609,12 @@
                     Tag="12">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="12" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="12" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="12"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -492,7 +628,12 @@
                     Tag="13">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="13" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="13" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="13"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -506,7 +647,12 @@
                     Tag="14">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="14" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="14" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="14"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -520,7 +666,12 @@
                     Tag="15">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="15" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="15" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="15"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -534,7 +685,12 @@
                     Tag="16">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="16" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="16" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="16"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -548,7 +704,12 @@
                     Tag="17">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="17" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="17" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="17"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -562,7 +723,12 @@
                     Tag="18">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="18" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="18" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="18"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -576,7 +742,12 @@
                     Tag="19">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="19" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="19" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="19"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -590,7 +761,12 @@
                     Tag="20">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="20" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="20" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="20"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -604,7 +780,12 @@
                     Tag="21">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="21" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="21" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="21"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -618,7 +799,12 @@
                     Tag="22">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="22" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="22" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="22"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -632,7 +818,12 @@
                     Tag="23">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="23" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="23" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="23"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -646,7 +837,12 @@
                     Tag="24">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="24" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="24" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="24"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button
@@ -660,20 +856,22 @@
                     Tag="25">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="25" FileDropCommand="{Binding FileDropCommand}" />
-                        <b:DragStartBehavior AllowedEffects="Move" DragDropData="25" />
+                        <b:DragStartBehavior
+                            AllowedEffects="Move"
+                            DragDropData="25"
+                            DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                            DummyDragControl="{Binding ElementName=dummyButton}"
+                            ZIndex="{Binding ZIndex, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Grid
-                    HorizontalAlignment="Center"
                     Grid.Row="4"
                     Grid.Column="1"
-                    Grid.ColumnSpan="3">
-                    <StackPanel
-                        Orientation="Horizontal"
-                        Visibility="{Binding PageNavigatorVisibility}">
+                    Grid.ColumnSpan="3"
+                    HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Visibility="{Binding PageNavigatorVisibility}">
                         <i:Interaction.Behaviors>
-                            <b:PageNavigateBehavior PageCount="{Binding PageCount}"
-                                                    CurrentPageCount="{Binding CurrentPageNo}"/>
+                            <b:PageNavigateBehavior CurrentPageCount="{Binding CurrentPageNo}" PageCount="{Binding PageCount}" />
                         </i:Interaction.Behaviors>
                     </StackPanel>
                 </Grid>

@@ -93,6 +93,7 @@
     <Compile Include="Models\AppInfoLink.cs" />
     <Compile Include="ViewModels\SettingViewModel.cs" />
     <Compile Include="ViewModels\SystemSettingViewModel.cs" />
+    <Compile Include="Views\Behaviors\ChangePageBehavior.cs" />
     <Compile Include="Views\Behaviors\CloseWindowAttachedBehavior.cs" />
     <Compile Include="Views\Behaviors\ExecuteSelectedAppBehavior.cs" />
     <Compile Include="Views\Behaviors\PageNavigateBehavior.cs" />
@@ -127,7 +128,7 @@
     <Compile Include="Commons\DragControlEventArgs.cs" />
     <Compile Include="Commons\DragGhost.cs" />
     <Compile Include="Commons\FileDropEventArgs.cs" />
-    <Compile Include="Commons\GlobalExclusionnfo.cs" />
+    <Compile Include="Commons\GlobalExclusionInfo.cs" />
     <Compile Include="Commons\RelayCommand.cs" />
     <Compile Include="Models\AppInfo.cs" />
     <Compile Include="Models\IconJsonConverter.cs" />
@@ -137,7 +138,6 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\Behaviors\DragAcceptBehavior.cs" />
     <Compile Include="Views\Behaviors\FileDropBehavior.cs" />
-    <Compile Include="Views\Behaviors\DragMoveBehavior.cs" />
     <Compile Include="Views\Behaviors\DragStartBehavior.cs" />
     <Compile Include="Views\Behaviors\KeepAliveWindowBehavior.cs" />
     <Compile Include="Views\Behaviors\ShowWindowBehavior.cs" />

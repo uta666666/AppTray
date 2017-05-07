@@ -41,6 +41,7 @@ namespace AppTray.ViewModels {
                 e.Effects = DragDropEffects.None;
             };
             _description.DragDrop += (e) => {
+                ZIndex = -1;
                 var befInfo = _buttonInfo[(e.FromButtonNo)];
                 if (befInfo == null) {
                     return;
@@ -381,6 +382,49 @@ namespace AppTray.ViewModels {
         public int CurrentPageNo {
             get {
                 return _buttonInfo.CurrentPageNo;
+            }
+        }
+
+        private int _zindex;
+        public int ZIndex {
+            get {
+                return _zindex;
+            }
+            set {
+                SetProperty(ref _zindex, value);
+            }
+        }
+
+        private int _dragedButtonNo;
+        public int DragedButtonNo {
+            get {
+                return _dragedButtonNo;
+            }
+            set {
+                SetProperty(ref _dragedButtonNo, value);
+
+                DragedButtonImage = _buttonInfo[value].ImageSource;
+                DragedButtonText = _buttonInfo[value].AppDisplayName;
+            }
+        }
+
+        private ImageSource _dragedButtonImage;
+        public ImageSource DragedButtonImage {
+            get {
+                return _dragedButtonImage;
+            }
+            set {
+                SetProperty(ref _dragedButtonImage, value);
+            }
+        }
+
+        private string _dragedButtonText;
+        public string DragedButtonText {
+            get {
+                return _dragedButtonText;
+            }
+            set {
+                SetProperty(ref _dragedButtonText, value);
             }
         }
 
