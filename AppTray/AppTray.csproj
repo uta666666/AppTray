@@ -93,7 +93,7 @@
     <Compile Include="Models\AppInfoLink.cs" />
     <Compile Include="ViewModels\SettingViewModel.cs" />
     <Compile Include="ViewModels\SystemSettingViewModel.cs" />
-    <Compile Include="Views\Behaviors\ChangePageBehavior.cs" />
+    <Compile Include="Views\Behaviors\MovePageBehavior.cs" />
     <Compile Include="Views\Behaviors\CloseWindowAttachedBehavior.cs" />
     <Compile Include="Views\Behaviors\ExecuteSelectedAppBehavior.cs" />
     <Compile Include="Views\Behaviors\PageNavigateBehavior.cs" />

@@ -17,35 +17,37 @@ namespace AppTray.Views.Behaviors {
             set { SetValue(AllowedEffectsProperty, value); }
         }
 
-        public static readonly DependencyProperty AllowedEffectsProperty = DependencyProperty.Register("AllowedEffects", typeof(DragDropEffects), typeof(DragStartBehavior), new UIPropertyMetadata(DragDropEffects.All));
+        public int CurrentPageNo {
+            get { return (int)GetValue(CurrentPageNoProperty); }
+            set { SetValue(CurrentPageNoProperty, value); }
+        }
 
         public object DragDropData {
             get { return GetValue(DragDropDataProperty); }
             set { SetValue(DragDropDataProperty, value); }
         }
-
-        public static readonly DependencyProperty DragDropDataProperty = DependencyProperty.Register("DragDropData", typeof(object), typeof(DragStartBehavior), new PropertyMetadata(null));
-
-        public int ZIndex {
-            get { return (int)GetValue(ZIndexProperty); }
-            set { SetValue(ZIndexProperty, value); }
+        
+        public int MovePagePanelZIndex {
+            get { return (int)GetValue(MovePagePanelZIndexProperty); }
+            set { SetValue(MovePagePanelZIndexProperty, value); }
         }
-
-        public static readonly DependencyProperty ZIndexProperty = DependencyProperty.Register(nameof(ZIndex), typeof(int), typeof(DragStartBehavior), new PropertyMetadata(null));
-
+        
         public Control DummyDragControl {
             get { return (Control)GetValue(DummyDragControlProperty); }
             set { SetValue(DummyDragControlProperty, value); }
         }
-
-        public static readonly DependencyProperty DummyDragControlProperty = DependencyProperty.Register(nameof(DummyDragControl), typeof(Control), typeof(DragStartBehavior), new PropertyMetadata(null));
-
+        
         public int DragedButtonNo {
             get { return (int)GetValue(DragedButtonNoProperty); }
             set { SetValue(DragedButtonNoProperty, value); }
         }
 
+        public static readonly DependencyProperty AllowedEffectsProperty = DependencyProperty.Register("AllowedEffects", typeof(DragDropEffects), typeof(DragStartBehavior), new UIPropertyMetadata(DragDropEffects.All));
+        public static readonly DependencyProperty DragDropDataProperty = DependencyProperty.Register("DragDropData", typeof(object), typeof(DragStartBehavior), new PropertyMetadata(null));
+        public static readonly DependencyProperty MovePagePanelZIndexProperty = DependencyProperty.Register(nameof(MovePagePanelZIndex), typeof(int), typeof(DragStartBehavior), new PropertyMetadata(null));
+        public static readonly DependencyProperty DummyDragControlProperty = DependencyProperty.Register(nameof(DummyDragControl), typeof(Control), typeof(DragStartBehavior), new PropertyMetadata(null));
         public static readonly DependencyProperty DragedButtonNoProperty = DependencyProperty.Register(nameof(DragedButtonNo), typeof(int), typeof(DragStartBehavior), new PropertyMetadata(null));
+        public static readonly DependencyProperty CurrentPageNoProperty = DependencyProperty.Register(nameof(CurrentPageNo), typeof(int), typeof(DragStartBehavior), new PropertyMetadata(null));
 
         protected override void OnAttached() {
             AssociatedObject.PreviewMouseDown += AssociatedObject_PreviewMouseDown;
@@ -73,7 +75,7 @@ namespace AppTray.Views.Behaviors {
             var point = e.GetPosition(AssociatedObject);
             if (CheckDistance(point, _origin)) {
                 GlobalExclusionInfo.IsDragDroping = true;
-                ZIndex = 1;
+                MovePagePanelZIndex = 1;
                 try {
                     if (_dragGhost == null) {
                         var c = sender as Control;
@@ -82,7 +84,7 @@ namespace AppTray.Views.Behaviors {
                         _dragGhost = new DragGhost(sender as UIElement, 0.5, e.GetPosition(sender as UIElement), DummyDragControl);
                         _dragGhost.Show();
                     }
-                    DragDrop.DoDragDrop(AssociatedObject, DragDropData, AllowedEffects);
+                    DragDrop.DoDragDrop(AssociatedObject, $"{CurrentPageNo},{DragDropData}", AllowedEffects);
                 } finally {
                     GlobalExclusionInfo.IsDragDroping = false;
                 }

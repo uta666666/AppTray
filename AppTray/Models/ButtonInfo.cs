@@ -87,6 +87,50 @@ namespace AppTray.Models {
             var fromButtonNo = GetButtonNo(appInfo);
         }
 
+        public void Move(int fromPageNo, int fromButtonNo, int toPageNo, int toButtonNo, AppInfo appInfo) {
+            _buttonInfoAllPage[fromPageNo].Remove(fromButtonNo);
+
+            var buttonInfoTo = _buttonInfoAllPage[toPageNo];
+            if (buttonInfoTo.ContainsKey(toButtonNo)) {
+                int index = fromButtonNo;
+
+                Stack<AppInfo> appStack = new Stack<AppInfo>();
+                appStack.Push(buttonInfoTo[toButtonNo]);
+                buttonInfoTo.Remove(toButtonNo);
+                buttonInfoTo[toButtonNo] = appInfo;
+
+                if (fromButtonNo < toButtonNo) {
+                    for (int i = toButtonNo - 1; i >= fromButtonNo; i--) {
+                        if (buttonInfoTo.ContainsKey(i)) {
+                            appStack.Push(buttonInfoTo[i]);
+                            buttonInfoTo.Remove(i);
+                            continue;
+                        }
+                        index = i;
+                        break;
+                    }
+                    for (int i = index; i < toButtonNo; i++) {
+                        buttonInfoTo[i] = appStack.Pop();
+                    }
+                } else if (fromButtonNo > toButtonNo) {
+                    for (int i = toButtonNo + 1; i <= fromButtonNo; i++) {
+                        if (buttonInfoTo.ContainsKey(i)) {
+                            appStack.Push(buttonInfoTo[i]);
+                            buttonInfoTo.Remove(i);
+                            continue;
+                        }
+                        index = i;
+                        break;
+                    }
+                    for (int i = index; i > toButtonNo; i--) {
+                        buttonInfoTo[i] = appStack.Pop();
+                    }
+                }
+            } else {
+                buttonInfoTo[toButtonNo] = appInfo;
+            }
+        }
+
         public void Move(int fromButtonNo, int toButtonNo, AppInfo appInfo) {
             _buttonInfo.Remove(fromButtonNo);
 

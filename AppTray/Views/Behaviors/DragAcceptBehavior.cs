@@ -17,7 +17,13 @@ namespace AppTray.Views.Behaviors {
             set { SetValue(DescriptionProperty, value); }
         }
 
+        public int CurrentPageNo {
+            get { return (int)GetValue(CurrentPageNoProperty); }
+            set { SetValue(CurrentPageNoProperty, value); }
+        }
+
         public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(DragAcceptDescription), typeof(DragAcceptBehavior), new PropertyMetadata(null));
+        public static readonly DependencyProperty CurrentPageNoProperty = DependencyProperty.Register(nameof(CurrentPageNo), typeof(int), typeof(DragAcceptBehavior), new PropertyMetadata(null));
 
         protected override void OnAttached() {
             AssociatedObject.PreviewDragOver += AssociatedObject_DragOver;
@@ -67,7 +73,7 @@ namespace AppTray.Views.Behaviors {
                 foreach (var colDef in AssociatedObject.ColumnDefinitions) {
                     Rect r = new Rect(x, y, colDef.ActualWidth, rowDef.ActualHeight);
                     if (r.Contains(p)) {
-                        desc.OnDrop(new DragControlEventArgs(e, no));
+                        desc.OnDrop(new DragControlEventArgs(e, CurrentPageNo, no));
                         e.Handled = true;
                         return;
                     }

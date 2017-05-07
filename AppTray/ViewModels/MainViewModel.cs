@@ -37,16 +37,19 @@ namespace AppTray.ViewModels {
                     if (e.Data.GetDataPresent(typeof(string))) {
                         return;
                     }
+                    return;
                 }
                 e.Effects = DragDropEffects.None;
             };
             _description.DragDrop += (e) => {
-                ZIndex = -1;
-                var befInfo = _buttonInfo[(e.FromButtonNo)];
+                MovePagePanelZIndex = -1;
+                //var befInfo = _buttonInfo[(e.FromButtonNo)];
+                var befInfo = _buttonInfo.GetButtonInfoAllPage()[e.FromPageNo][e.FromButtonNo];
                 if (befInfo == null) {
                     return;
                 }
-                _buttonInfo.Move(e.FromButtonNo, e.ToButtonNo, befInfo);
+                //_buttonInfo.Move(e.FromButtonNo, e.ToButtonNo, befInfo);
+                _buttonInfo.Move(e.FromPageNo, e.FromButtonNo, e.ToPageNo, e.ToButtonNo, befInfo);
                 RaisePropertyChanged(nameof(ButtonInfo));
             };
 
@@ -385,13 +388,13 @@ namespace AppTray.ViewModels {
             }
         }
 
-        private int _zindex;
-        public int ZIndex {
+        private int _movePagePanelZIndex;
+        public int MovePagePanelZIndex {
             get {
-                return _zindex;
+                return _movePagePanelZIndex;
             }
             set {
-                SetProperty(ref _zindex, value);
+                SetProperty(ref _movePagePanelZIndex, value);
             }
         }
 
