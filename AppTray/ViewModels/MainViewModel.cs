@@ -37,18 +37,18 @@ namespace AppTray.ViewModels {
                     if (e.Data.GetDataPresent(typeof(string))) {
                         return;
                     }
-                    return;
                 }
                 e.Effects = DragDropEffects.None;
             };
             _description.DragDrop += (e) => {
                 MovePagePanelZIndex = -1;
-                //var befInfo = _buttonInfo[(e.FromButtonNo)];
-                var befInfo = _buttonInfo.GetButtonInfoAllPage()[e.FromPageNo][e.FromButtonNo];
-                if (befInfo == null) {
+                if (!_buttonInfo.GetButtonInfoAllPage().ContainsKey(e.FromPageNo)) {
                     return;
                 }
-                //_buttonInfo.Move(e.FromButtonNo, e.ToButtonNo, befInfo);
+                if (!_buttonInfo.GetButtonInfoAllPage()[e.FromPageNo].ContainsKey(e.FromButtonNo)) {
+                    return;
+                }
+                var befInfo = _buttonInfo.GetButtonInfoAllPage()[e.FromPageNo][e.FromButtonNo];
                 _buttonInfo.Move(e.FromPageNo, e.FromButtonNo, e.ToPageNo, e.ToButtonNo, befInfo);
                 RaisePropertyChanged(nameof(ButtonInfo));
             };
@@ -405,9 +405,9 @@ namespace AppTray.ViewModels {
             }
             set {
                 SetProperty(ref _dragedButtonNo, value);
-
-                DragedButtonImage = _buttonInfo[value].ImageSource;
-                DragedButtonText = _buttonInfo[value].AppDisplayName;
+                var app = _buttonInfo[value];
+                DragedButtonImage = app?.ImageSource;
+                DragedButtonText = app?.AppDisplayName;
             }
         }
 
