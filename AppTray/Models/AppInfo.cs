@@ -21,6 +21,10 @@ namespace AppTray.Models {
             ImageSource = ConvertBitmapToBitmapSource();
         }
 
+        public void SetBitmapSource(IntPtr hicon, Int32Rect rect) {
+            ImageSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(hicon, rect, BitmapSizeOptions.FromEmptyOptions());
+        }
+
         private BitmapSource ConvertBitmapToBitmapSource() {
             IntPtr hbitmap = ConvertIconToBitmap().GetHbitmap();
             return System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(hbitmap, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());

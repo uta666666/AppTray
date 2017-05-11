@@ -15,8 +15,20 @@ namespace AppTray.ViewModels {
     public class SettingViewModel : BindableBase {
         public SettingViewModel() {
             OKCommand = new RelayCommand(() => {
-                IsUpdate = true;
-                CanClose = true;//閉じれない条件がないので常にtrue
+                if (_appInfo.FilePath != FilePath) {
+                    if (!File.Exists(FilePath)) {
+                        MessageBox.Show("ファイルが見つかりません。");
+                        IsUpdate = true;
+                        CanClose = false;
+                        return;
+                    }
+                    IsUpdate = true;
+                    CanClose = true;
+                    return;
+                }
+                //キャンセル扱い
+                IsUpdate = false;
+                CanClose = true;
             });
 
             CancelCommand = new RelayCommand(() => {

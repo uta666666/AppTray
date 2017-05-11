@@ -16,6 +16,9 @@ namespace AppTray.Models {
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
+            if (reader.Value == null) {
+                return null;
+            }
             string iconBase64String = reader.Value.ToString();
             using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(iconBase64String))) {
                 Bitmap bmp = (Bitmap)Bitmap.FromStream(ms);

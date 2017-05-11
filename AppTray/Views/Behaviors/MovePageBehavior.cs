@@ -59,8 +59,8 @@ namespace AppTray.Views.Behaviors {
         private DispatcherTimer _timer;
 
         private void Timer_Tick(object sender, EventArgs e) {
-            _timer.Stop();
             if (!GlobalExclusionInfo.IsDragDroping) {
+                _timer.Stop();
                 return;
             }
             Command?.Execute(IsNext);
