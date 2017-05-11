@@ -9,9 +9,29 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Newtonsoft.Json;
+using System.Runtime.InteropServices;
 
 namespace AppTray.Models {
     public class AppInfo {
+        // ExtractIconEx 複数の引数指定方法により、オーバーロード定義する。
+        [DllImport("Shell32.dll", CharSet = CharSet.Unicode)]
+        protected static extern uint ExtractIconEx(string lpszFile, int nIconIndex,
+            IntPtr[] phiconLarge, IntPtr[] phiconSmall, uint nIcons);
+        [DllImport("Shell32.dll", CharSet = CharSet.Unicode)]
+        protected static extern uint ExtractIconEx(string lpszFile, int nIconIndex,
+            IntPtr[] phiconLarge, IntPtr phiconSmall, uint nIcons);
+        [DllImport("Shell32.dll", CharSet = CharSet.Unicode)]
+        protected static extern uint ExtractIconEx(string lpszFile, int nIconIndex,
+            IntPtr phiconLarge, IntPtr[] phiconSmall, uint nIcons);
+        [DllImport("Shell32.dll", CharSet = CharSet.Unicode)]
+        protected static extern uint ExtractIconEx(string lpszFile, int nIconIndex,
+            IntPtr phiconLarge, IntPtr phiconSmall, uint nIcons);
+        // DestroyIcon の定義
+        [DllImport("User32.dll", CharSet = CharSet.Unicode)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        protected static extern bool DestroyIcon(IntPtr hIcon);
+
+
         public AppInfo() { }
 
         public void SetBitmapSource() {
@@ -21,7 +41,44 @@ namespace AppTray.Models {
             ImageSource = ConvertBitmapToBitmapSource();
         }
 
-        public void SetBitmapSource(IntPtr hicon, Int32Rect rect) {
+        protected void SetIconAndBitmapSource(string filePath) {
+            var url = new Uri(filePath);
+            if (!url.IsUnc) {
+                Icon = Icon.ExtractAssociatedIcon(filePath);
+                SetBitmapSource();
+                return;
+            }
+
+            IntPtr[] hLargeIcon = new IntPtr[1] { IntPtr.Zero };
+            IntPtr[] hSmallIcon = new IntPtr[1] { IntPtr.Zero };
+            try {
+                ExtractIconEx(filePath, 0, hLargeIcon, hSmallIcon, 1);
+                if (hLargeIcon[0] != IntPtr.Zero) {
+                    using (Icon largeIcon = Icon.FromHandle(hLargeIcon[0])) {
+                        Icon = largeIcon;
+                    }
+                    SetBitmapSource(hLargeIcon[0], new System.Windows.Int32Rect(0, 0, Icon.Width, Icon.Height));
+                } else if (hSmallIcon[0] != IntPtr.Zero) {
+                    using (Icon smallIcon = Icon.FromHandle(hSmallIcon[0])) {
+                        Icon = smallIcon;
+                    }
+                    SetBitmapSource(hSmallIcon[0], new System.Windows.Int32Rect(0, 0, Icon.Width, Icon.Height));
+                }
+            } finally {
+                foreach (IntPtr ptr in hLargeIcon) {
+                    if (ptr != IntPtr.Zero) {
+                        DestroyIcon(ptr);
+                    }
+                }
+                foreach (IntPtr ptr in hSmallIcon) {
+                    if (ptr != IntPtr.Zero) {
+                        DestroyIcon(ptr);
+                    }
+                }
+            }
+        }
+
+        private void SetBitmapSource(IntPtr hicon, Int32Rect rect) {
             ImageSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(hicon, rect, BitmapSizeOptions.FromEmptyOptions());
         }
 

@@ -15,8 +15,8 @@ namespace AppTray.Models {
             AppDisplayName = Path.GetFileNameWithoutExtension(filePath);
             Arguments = objShortcut.Arguments;
             WorkDirectory = objShortcut.WorkingDirectory;
-            Icon = Icon.ExtractAssociatedIcon(FilePath);
-            SetBitmapSource();
+
+            SetIconAndBitmapSource(filePath);
         }
 
         private IWshRuntimeLibrary.IWshShortcut LoadLink(string filePath) {
