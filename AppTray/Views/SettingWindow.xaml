@@ -7,17 +7,17 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:AppTray.ViewModels"
+    x:Name="Setting"
     Title="設定"
     Width="339"
     Height="332"
     Icon="/AppTray;component/main.ico"
     ResizeMode="NoResize"
     WindowStartupLocation="CenterOwner"
-    mc:Ignorable="d"
     WindowStyle="None"
-    x:Name="Setting">
+    mc:Ignorable="d">
     <Window.DataContext>
-        <vm:SettingViewModel/>
+        <vm:SettingViewModel />
     </Window.DataContext>
     <i:Interaction.Behaviors>
         <b:CloseWindowAttachedBehavior CanClose="{Binding CanClose}" />
@@ -28,8 +28,8 @@
     <Border BorderBrush="DimGray" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="301*"/>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="301*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="65" />
@@ -37,10 +37,11 @@
             </Grid.ColumnDefinitions>
             <StackPanel
                 Grid.Row="0"
-                Grid.Column="2"
+                Grid.Column="1"
+                Width="35"
                 Margin="0,2,0,0"
-                VerticalAlignment="Top"
                 HorizontalAlignment="Right"
+                VerticalAlignment="Top"
                 Orientation="Horizontal">
                 <StackPanel.Resources>
                     <Style x:Key="CaptionButtonStyleKey" TargetType="{x:Type Button}">
@@ -118,59 +119,62 @@
                     Command="{Binding WindowCloseCommand}"
                     CommandParameter="{Binding ElementName=Setting}"
                     Content="r"
+                    FontSize="20"
                     Style="{DynamicResource CaptionButtonStyleKey}" />
             </StackPanel>
             <TextBox
                 x:Name="textBoxAppName"
+                Grid.Row="1"
                 Grid.Column="1"
                 Height="23"
-                Margin="10,23,20,0"
+                Margin="10,23,10,0"
                 VerticalAlignment="Top"
                 Text="{Binding AppDisplayName}"
-                TextWrapping="NoWrap"
-                Grid.Row="1" />
+                TextWrapping="NoWrap" />
             <Label
                 x:Name="labelFilePath"
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
                 Width="74"
                 Height="26"
                 Margin="10,72,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Content="ファイルパス"
-                FontSize="11"
-                Grid.ColumnSpan="2"
-                Grid.Row="1" />
+                FontSize="11" />
             <TextBox
                 x:Name="textBoxFilePath"
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
                 Height="23"
-                Margin="10,98,20,0"
+                Margin="10,98,10,0"
                 VerticalAlignment="Top"
                 Text="{Binding FilePath}"
-                TextWrapping="NoWrap"
-                Grid.ColumnSpan="2"
-                Grid.Row="1" />
+                TextWrapping="NoWrap" />
             <Label
                 x:Name="labelArguments"
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
                 Width="82"
                 Height="26"
                 Margin="10,131,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Content="実行時引数"
-                FontSize="11"
-                Grid.ColumnSpan="2"
-                Grid.Row="1" />
+                FontSize="11" />
             <TextBox
                 x:Name="textBoxArguments"
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
                 Height="23"
-                Margin="10,157,20,0"
+                Margin="10,157,10,0"
                 VerticalAlignment="Top"
                 Text="{Binding Arguments}"
-                TextWrapping="NoWrap"
-                Grid.ColumnSpan="2"
-                Grid.Row="1" />
+                TextWrapping="NoWrap" />
             <Label
                 x:Name="labelWorkDirectory"
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
                 Width="82"
                 Height="26"
                 Margin="10,190,0,0"
@@ -178,21 +182,19 @@
                 VerticalAlignment="Top"
                 Content="作業フォルダ"
                 FontSize="11"
-                RenderTransformOrigin="0.5,3"
-                Grid.ColumnSpan="2"
-                Grid.Row="1" />
+                RenderTransformOrigin="0.5,3" />
             <TextBox
                 x:Name="textBoxWorkDirectory"
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
                 Height="23"
-                Margin="10,216,20,0"
+                Margin="10,216,10,0"
                 VerticalAlignment="Top"
                 Text="{Binding WorkDirectory}"
-                TextWrapping="NoWrap"
-                Grid.ColumnSpan="2"
-                Grid.Row="1" />
+                TextWrapping="NoWrap" />
             <Image
-                Grid.Row="1"
                 x:Name="image"
+                Grid.Row="1"
                 Width="40"
                 Height="40"
                 Margin="10,13,0,0"
@@ -201,26 +203,26 @@
                 Source="{Binding AppIcon}" />
             <Button
                 x:Name="buttonOK"
+                Grid.Row="1"
                 Grid.Column="1"
                 Width="75"
                 Height="25"
-                Margin="0,0,106,10"
+                Margin="0,0,90,10"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
                 Command="{Binding OKCommand}"
-                Content="OK"
-                Grid.Row="1" />
+                Content="OK" />
             <Button
                 x:Name="buttonCancel"
+                Grid.Row="1"
                 Grid.Column="1"
                 Width="75"
                 Height="25"
-                Margin="0,0,20,10"
+                Margin="0,0,10,10"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
                 Command="{Binding CancelCommand}"
-                Content="Cancel"
-                Grid.Row="1" />
+                Content="キャンセル" />
         </Grid>
     </Border>
 </Window>

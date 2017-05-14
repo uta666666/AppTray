@@ -15,7 +15,7 @@ namespace AppTray.ViewModels {
     public class SettingViewModel : BindableBase {
         public SettingViewModel() {
             OKCommand = new RelayCommand(() => {
-                if (_appInfo.FilePath != FilePath) {
+                if (HasChanges()) {
                     if (!File.Exists(FilePath)) {
                         MessageBox.Show("ファイルが見つかりません。");
                         IsUpdate = true;
@@ -40,6 +40,17 @@ namespace AppTray.ViewModels {
                 IsUpdate = false;
                 CanClose = true;
             });
+        }
+
+        private bool HasChanges() {
+            if (_appInfo.FilePath != FilePath ||
+                _appInfo.AppDisplayName != AppDisplayName ||
+                _appInfo.Arguments != Arguments ||
+                _appInfo.WorkDirectory != WorkDirectory ||
+                _appInfo.ImageSource != AppIcon) {
+                return true;
+            }
+            return false;
         }
 
         public ICommand OKCommand { get; set; }

@@ -203,7 +203,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="35" />
                 </Grid.ColumnDefinitions>
                 <Grid.Resources>
                     <ResourceDictionary Source="../CaptionButtonStyle.xaml" />
@@ -223,7 +223,7 @@
                     x:Name="textBoxSearch"
                     Grid.Column="1"
                     Height="23"
-                    Margin="120,2,10,2"
+                    Margin="120,2,5,2"
                     Background="#101010"
                     Foreground="WhiteSmoke"
                     IsTextCompletionEnabled="True"
@@ -257,7 +257,9 @@
                         Command="{Binding WindowCloseCommand}"
                         CommandParameter="{Binding ElementName=MainWindow1}"
                         Content="r"
-                        Style="{DynamicResource CaptionButtonStyleKey}" />
+                        Style="{DynamicResource CaptionButtonStyleKey}"
+                        FontSize="20"
+                        HorizontalAlignment="Right"/>
                 </StackPanel>
             </Grid>
             <Menu

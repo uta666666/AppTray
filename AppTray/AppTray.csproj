@@ -87,6 +87,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commons\IEnumerableExtensions.cs" />
+    <Compile Include="Commons\BitmapSourceJsonConverter.cs" />
     <Compile Include="Commons\KeyData.cs" />
     <Compile Include="Commons\SystemMenuItem.cs" />
     <Compile Include="Models\AppInfoExe.cs" />
@@ -131,7 +132,7 @@
     <Compile Include="Commons\GlobalExclusionInfo.cs" />
     <Compile Include="Commons\RelayCommand.cs" />
     <Compile Include="Models\AppInfo.cs" />
-    <Compile Include="Models\IconJsonConverter.cs" />
+    <Compile Include="Commons\IconJsonConverter.cs" />
     <Compile Include="Models\ButtonInfo.cs" />
     <Compile Include="Models\ShieldIcon.cs" />
     <Compile Include="ViewModels\DragAcceptDescription.cs" />
