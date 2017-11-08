@@ -70,8 +70,14 @@ namespace AppTray.Models {
                 return new AppInfoExe(filePath);
             } else if (ext.ToLower() == ".lnk") {
                 return new AppInfoLink(filePath);
+            } else if (Directory.Exists(filePath)) {
+                return new FolderInfo(filePath);
+            } else if (File.Exists(filePath)) {
+                return new AppInfoFile(filePath);
             } else {
+#if DEBUG
                 throw new NotImplementedException();
+#endif
             }
         }
 

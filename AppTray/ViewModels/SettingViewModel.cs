@@ -47,7 +47,8 @@ namespace AppTray.ViewModels {
                 _appInfo.AppDisplayName != AppDisplayName ||
                 _appInfo.Arguments != Arguments ||
                 _appInfo.WorkDirectory != WorkDirectory ||
-                _appInfo.ImageSource != AppIcon) {
+                _appInfo.ImageSource != AppIcon ||
+                _appInfo.IsAdmin != IsAdmin) {
                 return true;
             }
             return false;
@@ -68,13 +69,14 @@ namespace AppTray.ViewModels {
             Arguments = _appInfo.Arguments;
             AppIcon = _appInfo.ImageSource;
             WorkDirectory = _appInfo.WorkDirectory;
+            IsAdmin = _appInfo.IsAdmin;
         }
 
         public AppInfo GetAppInfo() {
             if (_appInfo.FilePath != FilePath) {
                 _appInfo = AppInfoFactory(FilePath);
             } else {
-                if(_appInfo.AppDisplayName != AppDisplayName) {
+                if (_appInfo.AppDisplayName != AppDisplayName) {
                     _appInfo.AppDisplayName = AppDisplayName;
                 }
                 if (_appInfo.Arguments != Arguments) {
@@ -82,6 +84,9 @@ namespace AppTray.ViewModels {
                 }
                 if (_appInfo.WorkDirectory != WorkDirectory) {
                     _appInfo.WorkDirectory = WorkDirectory;
+                }
+                if (_appInfo.IsAdmin != IsAdmin) {
+                    _appInfo.IsAdmin = IsAdmin;
                 }
             }
             return _appInfo;
@@ -93,8 +98,14 @@ namespace AppTray.ViewModels {
                 return new AppInfoExe(filePath);
             } else if (ext.ToLower() == ".lnk") {
                 return new AppInfoLink(filePath);
+            } else if (Directory.Exists(filePath)) {
+                return new FolderInfo(filePath);
+            } else if (File.Exists(filePath)) {
+                return new AppInfoFile(filePath);
             } else {
+#if DEBUG
                 throw new NotImplementedException();
+#endif
             }
         }
 
@@ -118,7 +129,7 @@ namespace AppTray.ViewModels {
             }
         }
 
-        public string _arguments;
+        private string _arguments;
         public string Arguments {
             get {
                 return _arguments;
@@ -128,13 +139,23 @@ namespace AppTray.ViewModels {
             }
         }
 
-        public string _workDirectory;
+        private string _workDirectory;
         public string WorkDirectory {
             get {
                 return _workDirectory;
             }
             set {
                 SetProperty(ref _workDirectory, value);
+            }
+        }
+
+        private bool _isAdmin;
+        public bool IsAdmin {
+            get {
+                return _isAdmin;
+            }
+            set {
+                SetProperty(ref _isAdmin, value);
             }
         }
 

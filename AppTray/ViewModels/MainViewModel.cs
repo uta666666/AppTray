@@ -138,7 +138,7 @@ namespace AppTray.ViewModels {
                     ConfirmForDeleteNotExistApp(int.Parse(buttonNo));
                     return;
                 }
-                app.Execute(false);
+                app.Execute(app.IsAdmin);
             });
 
             ExecuteAppAsAdminCommand = new RelayCommand<string>((buttonNo) => {
@@ -185,6 +185,11 @@ namespace AppTray.ViewModels {
                 }
 
                 IsShowingDialog = false;
+            });
+
+            CallSubWindowCommand = new RelayCommand<string>((buttonNo) => {
+                var sub = new SubListViewModel();
+                Messenger.Raise(new TransitionMessage(sub, "SubListWindowMessageKey"));
             });
 
             MovePageCommand = new RelayCommand<bool>((isNext) => {
@@ -266,6 +271,10 @@ namespace AppTray.ViewModels {
         /// ページ削除
         /// </summary>
         public ICommand DeletePageCommand { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand CallSubWindowCommand { get; set; }
 
         private double _top;
         /// <summary>

@@ -10,7 +10,7 @@
     x:Name="Setting"
     Title="設定"
     Width="339"
-    Height="332"
+    Height="360"
     Icon="/AppTray;component/main.ico"
     ResizeMode="NoResize"
     WindowStartupLocation="CenterOwner"
@@ -35,6 +35,9 @@
                 <ColumnDefinition Width="65" />
                 <ColumnDefinition Width="162*" />
             </Grid.ColumnDefinitions>
+            <Grid.Resources>
+                <!--<ResourceDictionary Source="../CaptionButtonStyle.xaml" />-->
+            </Grid.Resources>
             <StackPanel
                 Grid.Row="0"
                 Grid.Column="1"
@@ -223,6 +226,14 @@
                 VerticalAlignment="Bottom"
                 Command="{Binding CancelCommand}"
                 Content="キャンセル" />
+            <CheckBox
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                Margin="10,266,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="常に管理者として実行"
+                IsChecked="{Binding IsAdmin}" />
         </Grid>
     </Border>
 </Window>

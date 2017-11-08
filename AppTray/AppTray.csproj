@@ -91,8 +91,11 @@
     <Compile Include="Commons\KeyData.cs" />
     <Compile Include="Commons\SystemMenuItem.cs" />
     <Compile Include="Models\AppInfoExe.cs" />
+    <Compile Include="Models\AppInfoFile.cs" />
     <Compile Include="Models\AppInfoLink.cs" />
+    <Compile Include="Models\FolderInfo.cs" />
     <Compile Include="ViewModels\SettingViewModel.cs" />
+    <Compile Include="ViewModels\SubListViewModel.cs" />
     <Compile Include="ViewModels\SystemSettingViewModel.cs" />
     <Compile Include="Views\Behaviors\MovePageBehavior.cs" />
     <Compile Include="Views\Behaviors\CloseWindowAttachedBehavior.cs" />
@@ -104,6 +107,12 @@
     <Compile Include="Views\Converters\ApplicationInfoForAutoCompleteConverter.cs" />
     <Compile Include="Views\SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubListWindow.xaml.cs">
+      <DependentUpon>SubListWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubWindow.xaml.cs">
+      <DependentUpon>SubWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SystemSettingWindow.xaml.cs">
       <DependentUpon>SystemSettingWindow.xaml</DependentUpon>
@@ -147,6 +156,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\SettingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubListWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

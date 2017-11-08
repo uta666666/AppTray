@@ -105,7 +105,7 @@ namespace AppTray.Models {
         }
 
         public bool Exist() {
-            return File.Exists(FilePath);
+            return File.Exists(FilePath) || Directory.Exists(FilePath);
         }
 
         public void Execute(bool isAdmin) {
@@ -133,6 +133,8 @@ namespace AppTray.Models {
         public string Arguments { get; set; }
 
         public string WorkDirectory { get; set; }
+
+        public bool IsAdmin { get; set; }
 
         [JsonConverter(typeof(IconJsonConverter))]
         public Icon Icon { get; set; }

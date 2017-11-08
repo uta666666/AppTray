@@ -11,12 +11,15 @@ namespace AppTray.Models {
 
         public AppInfoLink(string filePath) : base() {
             var objShortcut = LoadLink(filePath);
-            FilePath = objShortcut.TargetPath;
+            if (File.Exists(objShortcut.TargetPath)) {
+                FilePath = objShortcut.TargetPath;
+                Arguments = objShortcut.Arguments;
+                WorkDirectory = objShortcut.WorkingDirectory;
+            } else {
+                FilePath = filePath;
+            }
             AppDisplayName = Path.GetFileNameWithoutExtension(filePath);
-            Arguments = objShortcut.Arguments;
-            WorkDirectory = objShortcut.WorkingDirectory;
-
-            SetIconAndBitmapSource(filePath);
+            SetIconAndBitmapSource(FilePath);
         }
 
         private IWshRuntimeLibrary.IWshShortcut LoadLink(string filePath) {

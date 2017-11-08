@@ -21,155 +21,7 @@
     Left="{Binding Left, Mode=TwoWay}"
     Top="{Binding Top, Mode=TwoWay}"
     WindowStyle="None">
-    <Window.Resources>
-        <c:ImageSourceMultiBindConverter x:Key="ImageSourceMultiConverter" />
-        <c:ApplicationInfoForAutoCompleteConverter x:Key="AppInfoAutoCompleteConverter" />
-        <c:ApplicationNameMultiBindConverter x:Key="AppNameMultiConverter" />
-        <c:ContextMenuEnableMultiBindConverter x:Key="ContextMenuEnableMultiConverter" />
-
-        <sys:Boolean x:Key="BoolTrue">True</sys:Boolean>
-        <sys:Boolean x:Key="BoolFalse">False</sys:Boolean>
-
-        <!--  うまく使えないのでとりあえずコメントアウト  -->
-        <!--<Style x:Key="SystemMenuItemStyleKey" TargetType="{x:Type MenuItem}">
-            <Setter Property="Command" Value="{Binding ApplicationCloseCommand, Mode=TwoWay}" />
-            <Setter Property="CommandParameter" Value="{Binding ElementName=MainWindow1, Mode=TwoWay}" />
-            <Setter Property="Background" Value="AliceBlue" />
-        </Style>-->
-
-        <!--  タイトルバー用のコンテキストメニュー  -->
-
-        <!--<CompositeCollection x:Key="SystemMenuItems" x:Shared="False">
-            <MenuItem Header="Help" InputGestureText="F1"></MenuItem>
-            <MenuItem Header="アプリケーション設定" />
-            <MenuItem Header="新しいページ" Command="vm:MyCommands.MenuItemClickCommand" IsEnabled="True" />
-            <MenuItem Header="現在のページを削除" />
-            <Separator />
-            <MenuItem Header="Exit">
-        -->
-        <!--<i:Interaction.Behaviors>
-                    <b:MenuItemClickBehavior Command="{Binding ApplicationCloseCommand, Mode=TwoWay}" Parameter="{Binding ElementName=MainWindow1}" />
-                </i:Interaction.Behaviors>-->
-        <!--
-            </MenuItem>
-        </CompositeCollection>
-        <ContextMenu x:Key="SystemMenu" ItemsSource="{Binding Source={StaticResource SystemMenuItems}}" />-->
-
-        <SolidColorBrush x:Key="NavigaterActiveColor" Color="Blue" />
-        <SolidColorBrush x:Key="NavigaterDeActiveColor" Color="Black" />
-        <SolidColorBrush x:Key="NavigaterStrokeColor" Color="DimGray" />
-
-        <!--  通常時のボタンの色  -->
-        <SolidColorBrush x:Key="NormalTextBlockBrash" Color="WhiteSmoke" />
-        <!--  通常時のボタンの色  -->
-        <SolidColorBrush x:Key="NormalButtonBrush" Color="#151515" />
-        <!--  通常時のボタンの背景色  -->
-        <SolidColorBrush x:Key="NormalBackgroundBrush" Color="Transparent" />
-        <!--  マウスオーバー時のボタンの色  -->
-        <SolidColorBrush x:Key="HoverButtonBrush" Color="#ffffff" />
-        <!--  マウスオーバー時のボタンの背景色  -->
-        <SolidColorBrush x:Key="HoverBackgroundBrush" Color="#66ffffff" />
-        <!--    -->
-        <SolidColorBrush x:Key="MenuItemForegroundBrush" Color="Black" />
-
-        <Style TargetType="{x:Type TextBlock}">
-            <Setter Property="Foreground" Value="{StaticResource NormalTextBlockBrash}" />
-        </Style>
-
-        <!--  アプリケーション登録ボタン  -->
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Foreground" Value="{StaticResource NormalButtonBrush}" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border
-                            Name="HoverButtonBorder"
-                            Background="{StaticResource NormalBackgroundBrush}"
-                            BorderBrush="{StaticResource NormalButtonBrush}"
-                            BorderThickness="1">
-                            <!--<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />-->
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="33" />
-                                </Grid.RowDefinitions>
-                                <Image
-                                    Grid.Row="0"
-                                    Margin="0,5,0,2"
-                                    Stretch="Uniform">
-                                    <Image.Source>
-                                        <MultiBinding Converter="{StaticResource ImageSourceMultiConverter}">
-                                            <Binding Path="ButtonInfo" />
-                                            <Binding Path="Tag" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Button}}" />
-                                        </MultiBinding>
-                                    </Image.Source>
-                                </Image>
-                                <TextBlock
-                                    Grid.Row="1"
-                                    Margin="2,0,2,0"
-                                    Foreground="{StaticResource NormalTextBlockBrash}"
-                                    TextWrapping="Wrap">
-                                    <TextBlock.Text>
-                                        <MultiBinding Converter="{StaticResource AppNameMultiConverter}">
-                                            <Binding Path="ButtonInfo" />
-                                            <Binding Path="Tag" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Button}}" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                            </Grid>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <!--  マウスオーバー  -->
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="HoverButtonBorder" Property="BorderBrush" Value="{StaticResource HoverButtonBrush}" />
-                                <Setter TargetName="HoverButtonBorder" Property="Background" Value="{StaticResource HoverBackgroundBrush}" />
-                                <Setter Property="Foreground" Value="{StaticResource HoverButtonBrush}" />
-                            </Trigger>
-                            <!--  ボタンを押した時に、背景色を透過  -->
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="HoverButtonBorder" Property="Background" Value="{StaticResource NormalBackgroundBrush}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="ContextMenu">
-                <Setter.Value>
-                    <ContextMenu Tag="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
-                        <MenuItem
-                            Command="{Binding ExecuteAppAsAdminCommand}"
-                            CommandParameter="{Binding Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"
-                            Header="管理者として実行">
-                            <MenuItem.Icon>
-                                <Image Source="{Binding ShieldImage}" />
-                            </MenuItem.Icon>
-                            <MenuItem.IsEnabled>
-                                <MultiBinding Converter="{StaticResource ContextMenuEnableMultiConverter}">
-                                    <Binding Path="ButtonInfo" />
-                                    <Binding Path="Tag" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}" />
-                                </MultiBinding>
-                            </MenuItem.IsEnabled>
-                        </MenuItem>
-                        <MenuItem
-                            Command="{Binding CallSettingWindowCommand}"
-                            CommandParameter="{Binding Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"
-                            Header="設定" />
-                        <MenuItem
-                            Command="{Binding DeleteAppCommand}"
-                            CommandParameter="{Binding Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"
-                            Header="削除">
-                            <MenuItem.IsEnabled>
-                                <MultiBinding Converter="{StaticResource ContextMenuEnableMultiConverter}">
-                                    <Binding Path="ButtonInfo" />
-                                    <Binding Path="Tag" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}" />
-                                </MultiBinding>
-                            </MenuItem.IsEnabled>
-                        </MenuItem>
-                    </ContextMenu>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
+    <Window.Resources />
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="{x:Static SystemParameters.CaptionHeight}" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
@@ -254,12 +106,12 @@
                         Width="23"
                         Height="23"
                         Margin="5,1,5,0"
+                        HorizontalAlignment="Right"
                         Command="{Binding WindowCloseCommand}"
                         CommandParameter="{Binding ElementName=MainWindow1}"
                         Content="r"
-                        Style="{DynamicResource CaptionButtonStyleKey}"
                         FontSize="20"
-                        HorizontalAlignment="Right"/>
+                        Style="{DynamicResource CaptionButtonStyleKey}" />
                 </StackPanel>
             </Grid>
             <Menu
@@ -393,6 +245,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="1">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="1" FileDropCommand="{Binding FileDropCommand}" />
@@ -412,6 +265,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="2">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="2" FileDropCommand="{Binding FileDropCommand}" />
@@ -431,6 +285,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="3">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="3" FileDropCommand="{Binding FileDropCommand}" />
@@ -450,6 +305,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="4">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="4" FileDropCommand="{Binding FileDropCommand}" />
@@ -469,6 +325,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="5">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="5" FileDropCommand="{Binding FileDropCommand}" />
@@ -489,6 +346,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="6">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="6" FileDropCommand="{Binding FileDropCommand}" />
@@ -509,6 +367,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="7">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="7" FileDropCommand="{Binding FileDropCommand}" />
@@ -529,6 +388,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="8">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="8" FileDropCommand="{Binding FileDropCommand}" />
@@ -549,6 +409,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="9">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="9" FileDropCommand="{Binding FileDropCommand}" />
@@ -569,6 +430,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="10">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="10" FileDropCommand="{Binding FileDropCommand}" />
@@ -589,6 +451,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="11">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="11" FileDropCommand="{Binding FileDropCommand}" />
@@ -609,6 +472,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="12">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="12" FileDropCommand="{Binding FileDropCommand}" />
@@ -629,6 +493,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="13">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="13" FileDropCommand="{Binding FileDropCommand}" />
@@ -649,6 +514,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="14">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="14" FileDropCommand="{Binding FileDropCommand}" />
@@ -669,6 +535,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="15">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="15" FileDropCommand="{Binding FileDropCommand}" />
@@ -689,6 +556,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="16">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="16" FileDropCommand="{Binding FileDropCommand}" />
@@ -709,6 +577,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="17">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="17" FileDropCommand="{Binding FileDropCommand}" />
@@ -729,6 +598,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="18">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="18" FileDropCommand="{Binding FileDropCommand}" />
@@ -749,6 +619,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="19">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="19" FileDropCommand="{Binding FileDropCommand}" />
@@ -769,6 +640,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="20">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="20" FileDropCommand="{Binding FileDropCommand}" />
@@ -789,6 +661,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="21">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="21" FileDropCommand="{Binding FileDropCommand}" />
@@ -809,6 +682,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="22">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="22" FileDropCommand="{Binding FileDropCommand}" />
@@ -829,6 +703,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="23">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="23" FileDropCommand="{Binding FileDropCommand}" />
@@ -849,6 +724,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="24">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="24" FileDropCommand="{Binding FileDropCommand}" />
@@ -869,6 +745,7 @@
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                     Opacity="0.8"
+                    Style="{StaticResource ApplicationButton}"
                     Tag="25">
                     <i:Interaction.Behaviors>
                         <b:FileDropBehavior ButtonNo="25" FileDropCommand="{Binding FileDropCommand}" />
