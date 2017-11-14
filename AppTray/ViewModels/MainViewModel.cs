@@ -27,6 +27,9 @@ namespace AppTray.ViewModels {
             ShieldImage = ShieldIcon.GetBitmapSource(true);
             PageNavigatorVisibility = Visibility.Collapsed;
 
+            //ホットキー登録
+            _hotKey = HotKey.Create();
+
             //登録情報取得
             _buttonInfo = new ButtonInfo(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location));
 
@@ -59,25 +62,25 @@ namespace AppTray.ViewModels {
             //ショートカット登録
             Shortcuts = new Dictionary<KeyData, ICommand>() {
                 {
-                    new KeyData() {KeyCode = Key.Right, Modifier=ModifierKeys.Alt },
+                    new KeyData() { KeyCode = Key.Right, Modifier=ModifierKeys.Alt },
                     new RelayCommand(() => {
                         _buttonInfo.NextPage();
                         RaisePropertyChanged(nameof(ButtonInfo));
                     })
                 },
                 {
-                    new KeyData() {KeyCode = Key.Left, Modifier=ModifierKeys.Alt },
+                    new KeyData() { KeyCode = Key.Left, Modifier=ModifierKeys.Alt },
                     new RelayCommand(() => {
                         _buttonInfo.PreviousPage();
                         RaisePropertyChanged(nameof(ButtonInfo));
                     })
                 },
                 {
-                    new KeyData() {KeyCode = Key.N, Modifier=ModifierKeys.Control },
+                    new KeyData() { KeyCode = Key.N, Modifier=ModifierKeys.Control },
                     AddPageCommand
                 },
                 {
-                    new KeyData() {KeyCode = Key.D, Modifier=ModifierKeys.Control },
+                    new KeyData() { KeyCode = Key.D, Modifier=ModifierKeys.Control },
                     DeletePageCommand
                 },
             };
@@ -86,24 +89,43 @@ namespace AppTray.ViewModels {
             SystemMenuItems = new List<SystemMenuItem>() {
                 new SystemMenuItem() {
                     MenuID = 0x0001,
+                    MenuName = "ホットキー設定",
+                    Command = new RelayCommand(() => {
+                        IsShowingDialog = true;
+
+                        using(var vm = new HotKeySettingViewModel(_hotKey)) {
+                            Messenger.Raise(new TransitionMessage(vm, "HotKeySettingWindowMessageKey"));
+                            if (vm.IsUpdate) {
+                                HotKey = new HotKey(){ Key = vm.Key, Modifiers = vm.ModifierKeys };
+                            }
+                        }
+
+                        IsShowingDialog = false;
+                    })
+                },
+                new SystemMenuItem() {
+                    IsSeparator = true
+                },
+                new SystemMenuItem() {
+                    MenuID = 0x0002,
                     MenuName = "新しいページを追加",
                     Command = AddPageCommand
                 },
-                new SystemMenuItem(){
-                    MenuID = 0x0002,
+                new SystemMenuItem() {
+                    MenuID = 0x0003,
                     MenuName = "現在のページを削除",
                     Command = DeletePageCommand
                 },
                 new SystemMenuItem() {
-                    MenuID = 0x0003,
+                    MenuID = 0x0004,
                     MenuName = "前ページ",
                     Command = new RelayCommand(() => {
                         _buttonInfo.PreviousPage();
                         RaisePropertyChanged(nameof(ButtonInfo));
                     })
                 },
-                new SystemMenuItem(){
-                    MenuID = 0x0004,
+                new SystemMenuItem() {
+                    MenuID = 0x0005,
                     MenuName = "次ページ",
                     Command = new RelayCommand(() => {
                         _buttonInfo.NextPage();
@@ -276,6 +298,7 @@ namespace AppTray.ViewModels {
         /// </summary>
         public ICommand CallSubWindowCommand { get; set; }
 
+
         private double _top;
         /// <summary>
         /// 初期表示位置
@@ -437,6 +460,16 @@ namespace AppTray.ViewModels {
             }
             set {
                 SetProperty(ref _dragedButtonText, value);
+            }
+        }
+
+        private HotKey _hotKey;
+        public HotKey HotKey {
+            get {
+                return _hotKey;
+            }
+            set {
+                SetProperty(ref _hotKey, value);
             }
         }
 

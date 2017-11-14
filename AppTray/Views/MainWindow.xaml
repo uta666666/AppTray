@@ -32,6 +32,9 @@
         <l:InteractionMessageTrigger MessageKey="SettingWindowMessageKey" Messenger="{Binding Messenger}">
             <l:TransitionInteractionMessageAction Mode="Modal" WindowType="{x:Type local:SettingWindow}" />
         </l:InteractionMessageTrigger>
+        <l:InteractionMessageTrigger MessageKey="HotKeySettingWindowMessageKey" Messenger="{Binding Messenger}">
+            <l:TransitionInteractionMessageAction Mode="Modal" WindowType="{x:Type local:HotKeySettingWindow}" />
+        </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>
     <i:Interaction.Behaviors>
         <b:KeepAliveWindowBehavior
@@ -43,6 +46,7 @@
         <b:ScrollWindowBehavior MiddleClickCommand="{Binding AddPageCommand}" ScrollCommand="{Binding MovePageCommand}" />
         <b:ShortcutBehavior ShortcutCommand="{Binding Shortcuts}" />
         <b:ShowSystemContextMenuBehavior MenuItems="{Binding SystemMenuItems}" />
+        <b:HotKeyBehavior HotKey="{Binding HotKey, Mode=OneWay}" />
     </i:Interaction.Behaviors>
     <Border BorderBrush="DimGray" BorderThickness="1">
         <Grid Background="Black" Opacity="0.8">

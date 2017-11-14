@@ -75,9 +75,7 @@ namespace AppTray.Models {
             } else if (File.Exists(filePath)) {
                 return new AppInfoFile(filePath);
             } else {
-#if DEBUG
                 throw new NotImplementedException();
-#endif
             }
         }
 

@@ -86,6 +86,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commons\HotKeyHelper.cs" />
     <Compile Include="Commons\IEnumerableExtensions.cs" />
     <Compile Include="Commons\BitmapSourceJsonConverter.cs" />
     <Compile Include="Commons\KeyData.cs" />
@@ -94,9 +95,13 @@
     <Compile Include="Models\AppInfoFile.cs" />
     <Compile Include="Models\AppInfoLink.cs" />
     <Compile Include="Models\FolderInfo.cs" />
+    <Compile Include="Models\HotKey.cs" />
+    <Compile Include="ViewModels\HotKeySettingViewModel.cs" />
     <Compile Include="ViewModels\SettingViewModel.cs" />
     <Compile Include="ViewModels\SubListViewModel.cs" />
     <Compile Include="ViewModels\SystemSettingViewModel.cs" />
+    <Compile Include="Views\Behaviors\HotKeyBehavior.cs" />
+    <Compile Include="Views\Behaviors\KeyToTextBehavior.cs" />
     <Compile Include="Views\Behaviors\MovePageBehavior.cs" />
     <Compile Include="Views\Behaviors\CloseWindowAttachedBehavior.cs" />
     <Compile Include="Views\Behaviors\ExecuteSelectedAppBehavior.cs" />
@@ -105,6 +110,10 @@
     <Compile Include="Views\Behaviors\ShortcutBehavior.cs" />
     <Compile Include="Views\Behaviors\ShowSystemContextMenuBehavior.cs" />
     <Compile Include="Views\Converters\ApplicationInfoForAutoCompleteConverter.cs" />
+    <Compile Include="Views\Converters\KeyStringConverter.cs" />
+    <Compile Include="Views\HotKeySettingWindow.xaml.cs">
+      <DependentUpon>HotKeySettingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
     </Compile>
@@ -118,6 +127,10 @@
       <DependentUpon>SystemSettingWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="CaptionButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HotKeySettingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

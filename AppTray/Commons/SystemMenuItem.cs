@@ -7,6 +7,8 @@ using System.Windows.Input;
 
 namespace AppTray.Commons {
     public class SystemMenuItem {
+        public bool IsSeparator { get; set; }
+
         public uint MenuID { get; set; }
 
         public string MenuName { get; set; }

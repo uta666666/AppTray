@@ -16,7 +16,7 @@ namespace AppTray.ViewModels {
         public SettingViewModel() {
             OKCommand = new RelayCommand(() => {
                 if (HasChanges()) {
-                    if (!File.Exists(FilePath)) {
+                    if (!File.Exists(FilePath) && !Directory.Exists(FilePath)) {
                         MessageBox.Show("ファイルが見つかりません。");
                         IsUpdate = true;
                         CanClose = false;
@@ -103,9 +103,7 @@ namespace AppTray.ViewModels {
             } else if (File.Exists(filePath)) {
                 return new AppInfoFile(filePath);
             } else {
-#if DEBUG
                 throw new NotImplementedException();
-#endif
             }
         }
 

@@ -59,6 +59,14 @@ namespace AppTray.Views.Behaviors {
             InsertMenuItem(hSysMenu, 5, true, ref item1);
 
             foreach (var menuItem in MenuItems) {
+                if (menuItem.IsSeparator) {
+                    MENUITEMINFO item3 = new MENUITEMINFO();
+                    item3.cbSize = (uint)Marshal.SizeOf(item3);
+                    item3.fMask = MIIM_FTYPE;
+                    item3.fType = MFT_SEPARATOR;
+                    InsertMenuItem(hSysMenu, 5, true, ref item3);
+                    continue;
+                }
                 MENUITEMINFO item2 = new MENUITEMINFO();
                 item2.cbSize = (uint)Marshal.SizeOf(item2);
                 item2.fMask = MIIM_STRING | MIIM_ID;
