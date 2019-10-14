@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:b="clr-namespace:AppTray.Views.Behaviors"
     xmlns:c="clr-namespace:AppTray.Views.Converters"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
     xmlns:local="clr-namespace:AppTray.Views"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -136,28 +136,23 @@
                         Header="閉じる"
                         InputGestureText="Alt+F4" />
                 </MenuItem>-->
-                <MenuItem Header="ページ">
+                <MenuItem Height="20" Header="ページ">
                     <MenuItem
                         Command="{Binding MovePageCommand}"
                         CommandParameter="{StaticResource BoolTrue}"
-                        Foreground="{StaticResource MenuItemForegroundBrush}"
                         Header="次ページ"
                         InputGestureText="Alt+Right" />
                     <MenuItem
                         Command="{Binding MovePageCommand}"
                         CommandParameter="{StaticResource BoolFalse}"
-                        Foreground="{StaticResource MenuItemForegroundBrush}"
                         Header="前ページ"
                         InputGestureText="Alt+Left" />
-                    <Separator />
                     <MenuItem
                         Command="{Binding AddPageCommand}"
-                        Foreground="{StaticResource MenuItemForegroundBrush}"
                         Header="新しいページを追加"
                         InputGestureText="Ctrl+N" />
                     <MenuItem
                         Command="{Binding DeletePageCommand}"
-                        Foreground="{StaticResource MenuItemForegroundBrush}"
                         Header="現在のページを削除"
                         InputGestureText="Ctrl+D" />
                 </MenuItem>

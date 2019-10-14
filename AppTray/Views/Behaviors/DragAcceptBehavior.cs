@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Interactivity;
 using AppTray.Views;
 using System.Windows.Controls;
 using AppTray.Commons;
+using Microsoft.Xaml.Behaviors;
 
 namespace AppTray.Views.Behaviors {
     public sealed class DragAcceptBehavior : Behavior<Grid> {

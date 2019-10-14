@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interactivity;
 using AppTray.Commons;
+using Microsoft.Xaml.Behaviors;
 
 namespace AppTray.Views.Behaviors {
     public class FileDropBehavior : Behavior<Button> {

@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Microsoft.Xaml.Behaviors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Interactivity;
 
 namespace AppTray.Views.Behaviors {
     public class ShowWindowBehavior : Behavior<Window> {
@@ -65,8 +65,11 @@ namespace AppTray.Views.Behaviors {
                 System.Windows.Media.CompositionTarget ct = src.CompositionTarget;
                 System.Windows.Point p = ct.TransformFromDevice.Transform(wp);
                 Left = p.X - (AssociatedObject.Width / 2);
-                double diff = p.Y - SystemParameters.WorkArea.Height;
-                Top = p.Y - AssociatedObject.Height - diff;
+
+                var diff = p.Y + AssociatedObject.Height - SystemParameters.WorkArea.Height;
+
+                //double diff = p.Y - SystemParameters.WorkArea.Height;
+                Top = p.Y - (diff > 0 ? diff : 0);// - AssociatedObject.Height - diff;
             }
         }
     }

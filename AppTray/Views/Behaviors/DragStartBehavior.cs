@@ -1,9 +1,9 @@
 ﻿using AppTray.Commons;
+using Microsoft.Xaml.Behaviors;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interactivity;
 using System.Windows.Media;
 
 namespace AppTray.Views.Behaviors {

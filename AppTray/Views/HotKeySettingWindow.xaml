@@ -5,14 +5,21 @@
     xmlns:b="clr-namespace:AppTray.Views.Behaviors"
     xmlns:c="clr-namespace:AppTray.Views.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:AppTray.ViewModels"
     Title="ホットキー設定"
     Width="350"
     Height="150"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
     Icon="/AppTray;component/main.ico"
     ResizeMode="NoResize"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
     WindowStartupLocation="CenterOwner"
     WindowStyle="None"
     mc:Ignorable="d">
@@ -33,13 +40,13 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
-                <RowDefinition Height="301*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="45" />
             </Grid.RowDefinitions>
             <StackPanel
                 Grid.Row="0"
-                Grid.Column="1"
                 Width="35"
-                Margin="0,2,0,0"
+                Margin="0,2,0.333,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 Orientation="Horizontal">
@@ -112,6 +119,7 @@
                         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                     </Style>
                 </StackPanel.Resources>
+
                 <Button
                     Width="23"
                     Height="23"
@@ -122,28 +130,7 @@
                     FontSize="20"
                     Style="{DynamicResource CaptionButtonStyleKey}" />
             </StackPanel>
-            <Button
-                x:Name="buttonOK"
-                Grid.Row="1"
-                Grid.Column="1"
-                Width="75"
-                Height="25"
-                Margin="0,0,90,10"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"
-                Command="{Binding OKCommand}"
-                Content="OK" />
-            <Button
-                x:Name="buttonCancel"
-                Grid.Row="1"
-                Grid.Column="1"
-                Width="75"
-                Height="25"
-                Margin="0,0,10,10"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"
-                Command="{Binding CancelCommand}"
-                Content="キャンセル" />
+
             <CheckBox
                 Grid.Row="1"
                 Margin="10,27,0,0"
@@ -168,7 +155,7 @@
             <TextBox
                 Grid.Row="1"
                 Height="23"
-                Margin="187,22,10,0"
+                Margin="187,22,9.333,0"
                 VerticalAlignment="Top"
                 VerticalContentAlignment="Center"
                 IsReadOnly="True"
@@ -178,6 +165,37 @@
                     <b:KeyToTextBehavior Key="{Binding Key, Mode=OneWayToSource}" />
                 </i:Interaction.Behaviors>
             </TextBox>
+
+            <Grid Grid.Row="2">
+                <StackPanel
+                    Width="160"
+                    Height="25"
+                    Margin="0,0,10,10"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal">
+                    <Button
+                        x:Name="buttonOK"
+                        Grid.Row="2"
+                        Width="75"
+                        Height="25"
+                        Margin="0,0,0,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Command="{Binding OKCommand}"
+                        Content="OK" />
+                    <Button
+                        x:Name="buttonCancel"
+                        Grid.Row="2"
+                        Width="75"
+                        Height="25"
+                        Margin="10,0,0,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Command="{Binding CancelCommand}"
+                        Content="ｷｬﾝｾﾙ" />
+                </StackPanel>
+            </Grid>
         </Grid>
     </Border>
 </Window>

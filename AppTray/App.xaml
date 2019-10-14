@@ -6,6 +6,14 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Bluegrey.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Orange.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        
         <c:ImageSourceMultiBindConverter x:Key="ImageSourceMultiConverter" />
         <c:ApplicationInfoForAutoCompleteConverter x:Key="AppInfoAutoCompleteConverter" />
         <c:ApplicationNameMultiBindConverter x:Key="AppNameMultiConverter" />
@@ -152,6 +160,7 @@
                     </ContextMenu>
                 </Setter.Value>
             </Setter>
-        </Style>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
