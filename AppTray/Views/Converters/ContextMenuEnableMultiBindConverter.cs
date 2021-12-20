@@ -6,9 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Markup;
 
 namespace AppTray.Views.Converters {
-    class ContextMenuEnableMultiBindConverter : IMultiValueConverter {
+    public class ContextMenuEnableMultiBindConverter : MarkupExtension, IMultiValueConverter {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
             if (!(values[0] is ButtonInfo && values[1] is string)) {
                 return false;
@@ -26,6 +27,14 @@ namespace AppTray.Views.Converters {
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) {
             throw new NotImplementedException();
+        }
+
+
+        private static ContextMenuEnableMultiBindConverter _converter;
+
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            return _converter ?? (_converter = new ContextMenuEnableMultiBindConverter());
         }
     }
 }

@@ -12,8 +12,10 @@ using Newtonsoft.Json;
 using System.Runtime.InteropServices;
 using AppTray.Commons;
 
-namespace AppTray.Models {
-    public class AppInfo {
+namespace AppTray.Models
+{
+    public class AppInfo
+    {
 
         [DllImport("Shell32.dll", CharSet = CharSet.Auto, BestFitMapping = false, EntryPoint = "ExtractAssociatedIcon")]
         public static extern IntPtr IntExtractAssociatedIcon(HandleRef hInst, StringBuilder iconPath, ref int index);
@@ -38,25 +40,31 @@ namespace AppTray.Models {
 
         public AppInfo() { }
 
-        public void SetBitmapSource() {
-            if (Icon == null) {
+        public void SetBitmapSource()
+        {
+            if (Icon == null)
+            {
                 return;
             }
             ImageSource = ConvertBitmapToBitmapSource();
         }
 
-        private BitmapSource ConvertBitmapToBitmapSource() {
+        private BitmapSource ConvertBitmapToBitmapSource()
+        {
             IntPtr hbitmap = ConvertIconToBitmap().GetHbitmap();
             return System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(hbitmap, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
         }
 
-        private Bitmap ConvertIconToBitmap() {
+        private Bitmap ConvertIconToBitmap()
+        {
             return Icon.ToBitmap();
         }
 
-        protected void SetIconAndBitmapSource(string filePath) {
+        protected void SetIconAndBitmapSource(string filePath)
+        {
             var url = new Uri(filePath);
-            if (!url.IsUnc) {
+            if (!url.IsUnc)
+            {
                 Icon = Icon.ExtractAssociatedIcon(filePath);
                 SetBitmapSource();
                 return;
@@ -96,43 +104,56 @@ namespace AppTray.Models {
             //}
         }
 
-        private void SetBitmapSource(IntPtr hicon, Int32Rect rect) {
+        private void SetBitmapSource(IntPtr hicon, Int32Rect rect)
+        {
             ImageSource = ConvertHIconToBitmapSource(hicon, rect);
         }
 
-        private BitmapSource ConvertHIconToBitmapSource(IntPtr hicon, Int32Rect rect) {
+        private BitmapSource ConvertHIconToBitmapSource(IntPtr hicon, Int32Rect rect)
+        {
             return System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(hicon, rect, BitmapSizeOptions.FromEmptyOptions());
         }
 
-        public bool Exist() {
+        public virtual bool Exist()
+        {
             return File.Exists(FilePath) || Directory.Exists(FilePath);
         }
 
-        public void Execute(bool isAdmin) {
-            try {
-                if (!Exist()) {
+        public virtual void Execute(bool isAdmin)
+        {
+            try
+            {
+                if (!Exist())
+                {
                     return;
                 }
                 Process p = new Process();
                 p.StartInfo.FileName = FilePath;
-                if (isAdmin) {
+                if (isAdmin)
+                {
                     p.StartInfo.Verb = "RunAs";
                 }
                 p.StartInfo.Arguments = Arguments;
                 p.StartInfo.WorkingDirectory = WorkDirectory;
                 p.Start();
-            } catch {
+            }
+            catch
+            {
                 //mushi
             }
         }
 
         public string AppDisplayName { get; set; }
 
+        public AppCategory Category { get; set; }
+
         public string FilePath { get; set; }
 
         public string Arguments { get; set; }
 
         public string WorkDirectory { get; set; }
+
+        public List<string> Command { get; set; }
 
         public bool IsAdmin { get; set; }
 

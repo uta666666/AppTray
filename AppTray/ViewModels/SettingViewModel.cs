@@ -1,5 +1,6 @@
 ﻿using AppTray.Commons;
 using AppTray.Models;
+using Reactive.Bindings;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,172 +11,155 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Reactive.Linq;
+using Reactive.Bindings.Extensions;
 
-namespace AppTray.ViewModels {
-    public class SettingViewModel : BindableBase {
-        public SettingViewModel() {
-            OKCommand = new RelayCommand(() => {
-                if (HasChanges()) {
-                    if (!File.Exists(FilePath) && !Directory.Exists(FilePath)) {
+namespace AppTray.ViewModels
+{
+    public class SettingViewModel : BindableBase
+    {
+        public SettingViewModel()
+        {
+            AppDisplayName = new ReactiveProperty<string>();
+            FilePath = new ReactiveProperty<string>();
+            Arguments = new ReactiveProperty<string>();
+            WorkDirectory = new ReactiveProperty<string>();
+            IsAdmin = new ReactiveProperty<bool>();
+            AppIcon = new ReactiveProperty<BitmapSource>();
+            CanClose = new ReactiveProperty<bool>();
+
+            OKCommand = new[] { AppDisplayName.Select(x => string.IsNullOrWhiteSpace(x)), FilePath.Select(x => string.IsNullOrWhiteSpace(x)) }.CombineLatestValuesAreAllFalse().ToReactiveCommand();
+            OKCommand.Subscribe(() =>
+            {
+                if (HasChanges())
+                {
+                    if (!File.Exists(FilePath.Value) && !Directory.Exists(FilePath.Value))
+                    {
                         MessageBox.Show("ファイルが見つかりません。");
                         IsUpdate = true;
-                        CanClose = false;
+                        CanClose.Value = false;
                         return;
                     }
+                    UpdateAppInfo();
                     IsUpdate = true;
-                    CanClose = true;
+                    CanClose.Value = true;
                     return;
                 }
                 //キャンセル扱い
                 IsUpdate = false;
-                CanClose = true;
+                CanClose.Value = true;
             });
 
-            CancelCommand = new RelayCommand(() => {
+            CancelCommand = new ReactiveCommand();
+            CancelCommand.Subscribe(() =>
+            {
                 IsUpdate = false;
-                CanClose = true;//キャンセルは常にtrue
-            });
-
-            WindowCloseCommand = new RelayCommand<Window>((w) => {
-                IsUpdate = false;
-                CanClose = true;
+                CanClose.Value = true;//キャンセルは常にtrue
             });
         }
 
-        private bool HasChanges() {
-            if (_appInfo.FilePath != FilePath ||
-                _appInfo.AppDisplayName != AppDisplayName ||
-                _appInfo.Arguments != Arguments ||
-                _appInfo.WorkDirectory != WorkDirectory ||
-                _appInfo.ImageSource != AppIcon ||
-                _appInfo.IsAdmin != IsAdmin) {
+        private bool HasChanges()
+        {
+            if (_appInfo.FilePath != FilePath.Value ||
+                _appInfo.AppDisplayName != AppDisplayName.Value ||
+                _appInfo.Arguments != Arguments.Value ||
+                _appInfo.WorkDirectory != WorkDirectory.Value ||
+                _appInfo.ImageSource != AppIcon.Value ||
+                _appInfo.IsAdmin != IsAdmin.Value)
+            {
                 return true;
             }
             return false;
         }
 
-        public ICommand OKCommand { get; set; }
+        private void UpdateAppInfo()
+        {
+            if (_appInfo.FilePath != FilePath.Value)
+            {
+                //ファイルが変わったら作り直す
+                _appInfo = AppInfoFactory(FilePath.Value);
+            }
 
-        public ICommand CancelCommand { get; set; }
-
-        public ICommand WindowCloseCommand { get; set; }
-
-        private AppInfo _appInfo;
-
-        public void SetAppInfo(AppInfo info) {
-            _appInfo = info;
-            AppDisplayName = info.AppDisplayName;
-            FilePath = _appInfo.FilePath;
-            Arguments = _appInfo.Arguments;
-            AppIcon = _appInfo.ImageSource;
-            WorkDirectory = _appInfo.WorkDirectory;
-            IsAdmin = _appInfo.IsAdmin;
+            if (_appInfo.AppDisplayName != AppDisplayName.Value)
+            {
+                _appInfo.AppDisplayName = AppDisplayName.Value;
+            }
+            if (_appInfo.Arguments != Arguments.Value)
+            {
+                _appInfo.Arguments = Arguments.Value;
+            }
+            if (_appInfo.WorkDirectory != WorkDirectory.Value)
+            {
+                _appInfo.WorkDirectory = WorkDirectory.Value;
+            }
+            if (_appInfo.IsAdmin != IsAdmin.Value)
+            {
+                _appInfo.IsAdmin = IsAdmin.Value;
+            }
         }
 
-        public AppInfo GetAppInfo() {
-            if (_appInfo.FilePath != FilePath) {
-                _appInfo = AppInfoFactory(FilePath);
-            } else {
-                if (_appInfo.AppDisplayName != AppDisplayName) {
-                    _appInfo.AppDisplayName = AppDisplayName;
-                }
-                if (_appInfo.Arguments != Arguments) {
-                    _appInfo.Arguments = Arguments;
-                }
-                if (_appInfo.WorkDirectory != WorkDirectory) {
-                    _appInfo.WorkDirectory = WorkDirectory;
-                }
-                if (_appInfo.IsAdmin != IsAdmin) {
-                    _appInfo.IsAdmin = IsAdmin;
-                }
-            }
+        public void SetAppInfo(AppInfo info)
+        {
+            _appInfo = info;
+            AppDisplayName.Value = info.AppDisplayName;
+            FilePath.Value = _appInfo.FilePath;
+            Arguments.Value = _appInfo.Arguments;
+            AppIcon.Value = _appInfo.ImageSource;
+            WorkDirectory.Value = _appInfo.WorkDirectory;
+            IsAdmin.Value = _appInfo.IsAdmin;
+        }
+
+        public AppInfo GetAppInfo()
+        {
             return _appInfo;
         }
 
-        private AppInfo AppInfoFactory(string filePath) {
+        private AppInfo AppInfoFactory(string filePath)
+        {
             var ext = Path.GetExtension(filePath);
-            if (ext.ToLower() == ".exe") {
+            if (ext.ToLower() == ".exe")
+            {
                 return new AppInfoExe(filePath);
-            } else if (ext.ToLower() == ".lnk") {
+            }
+            else if (ext.ToLower() == ".lnk")
+            {
                 return new AppInfoLink(filePath);
-            } else if (Directory.Exists(filePath)) {
+            }
+            else if (Directory.Exists(filePath))
+            {
                 return new FolderInfo(filePath);
-            } else if (File.Exists(filePath)) {
+            }
+            else if (File.Exists(filePath))
+            {
                 return new AppInfoFile(filePath);
-            } else {
+            }
+            else
+            {
                 throw new NotImplementedException();
             }
         }
 
-        private string _appDisplayName;
-        public string AppDisplayName {
-            get {
-                return _appDisplayName;
-            }
-            set {
-                SetProperty(ref _appDisplayName, value);
-            }
-        }
 
-        private string _filePath;
-        public string FilePath {
-            get {
-                return _filePath;
-            }
-            set {
-                SetProperty(ref _filePath, value);
-            }
-        }
+        private AppInfo _appInfo;
 
-        private string _arguments;
-        public string Arguments {
-            get {
-                return _arguments;
-            }
-            set {
-                SetProperty(ref _arguments, value);
-            }
-        }
 
-        private string _workDirectory;
-        public string WorkDirectory {
-            get {
-                return _workDirectory;
-            }
-            set {
-                SetProperty(ref _workDirectory, value);
-            }
-        }
+        public ReactiveCommand OKCommand { get; private set; }
 
-        private bool _isAdmin;
-        public bool IsAdmin {
-            get {
-                return _isAdmin;
-            }
-            set {
-                SetProperty(ref _isAdmin, value);
-            }
-        }
+        public ReactiveCommand CancelCommand { get; private set; }
 
-        public BitmapSource _icon;
-        public BitmapSource AppIcon {
-            get {
-                return _icon;
-            }
-            set {
-                SetProperty(ref _icon, value);
-            }
-        }
+        public ReactiveProperty<string> AppDisplayName { get; set; }
 
-        private bool _canClose;
-        public bool CanClose {
-            get {
-                return _canClose;
-            }
-            set {
-                SetProperty(ref _canClose, value);
-            }
-        }
+        public ReactiveProperty<string> FilePath { get; set; }
+
+        public ReactiveProperty<string> Arguments { get; set; }
+
+        public ReactiveProperty<string> WorkDirectory { get; set; }
+
+        public ReactiveProperty<bool> IsAdmin { get; set; }
+
+        public ReactiveProperty<BitmapSource> AppIcon { get; set; }
+
+        public ReactiveProperty<bool> CanClose { get; set; }
 
         public bool IsUpdate { get; set; }
     }

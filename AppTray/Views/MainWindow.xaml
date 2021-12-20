@@ -21,21 +21,36 @@
     Left="{Binding Left, Mode=TwoWay}"
     Top="{Binding Top, Mode=TwoWay}"
     WindowStyle="None">
-    <Window.Resources />
+    <Window.Resources>
+        <!--<ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Style/ApplicationButtonStyle.xaml" />
+                <ResourceDictionary Source="../Style/CaptionButtonStyle.xaml" />
+                <ResourceDictionary Source="../Style/CheckBoxStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>-->
+    </Window.Resources>
+
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="{x:Static SystemParameters.CaptionHeight}" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
+
     <Window.DataContext>
         <vm:MainViewModel />
     </Window.DataContext>
+
     <i:Interaction.Triggers>
         <l:InteractionMessageTrigger MessageKey="SettingWindowMessageKey" Messenger="{Binding Messenger}">
             <l:TransitionInteractionMessageAction Mode="Modal" WindowType="{x:Type local:SettingWindow}" />
+        </l:InteractionMessageTrigger>
+        <l:InteractionMessageTrigger MessageKey="CommandWindowMessageKey" Messenger="{Binding Messenger}">
+            <l:TransitionInteractionMessageAction Mode="Modal" WindowType="{x:Type local:CommandWindow}" />
         </l:InteractionMessageTrigger>
         <l:InteractionMessageTrigger MessageKey="HotKeySettingWindowMessageKey" Messenger="{Binding Messenger}">
             <l:TransitionInteractionMessageAction Mode="Modal" WindowType="{x:Type local:HotKeySettingWindow}" />
         </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>
+
     <i:Interaction.Behaviors>
         <b:KeepAliveWindowBehavior
             CanCloseWindow="{Binding CanCloseWindow, Mode=TwoWay}"
@@ -48,6 +63,7 @@
         <b:ShowSystemContextMenuBehavior MenuItems="{Binding SystemMenuItems}" />
         <b:HotKeyBehavior HotKey="{Binding HotKey, Mode=OneWay}" />
     </i:Interaction.Behaviors>
+
     <Border BorderBrush="DimGray" BorderThickness="1">
         <Grid Background="Black" Opacity="0.8">
             <Grid.RowDefinitions>
@@ -55,36 +71,39 @@
                 <RowDefinition Height="20" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="35" />
+                    <ColumnDefinition Width="40" />
                 </Grid.ColumnDefinitions>
-                <Grid.Resources>
+                <!--<Grid.Resources>
                     <ResourceDictionary Source="../CaptionButtonStyle.xaml" />
-                </Grid.Resources>
+                </Grid.Resources>-->
                 <Grid.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Setting" />
                     </ContextMenu>
                 </Grid.ContextMenu>
+
                 <CheckBox
                     x:Name="checkBoxShowDeactivate"
                     Grid.Column="0"
                     Margin="10,0,5,0"
                     IsChecked="{Binding IsChecked}"
                     Style="{StaticResource CustomCheckBoxStyleKey}" />
+
                 <toolkit:AutoCompleteBox
                     x:Name="textBoxSearch"
                     Grid.Column="1"
                     Height="23"
-                    Margin="120,2,5,2"
+                    Margin="40,2,40,2"
                     Background="#101010"
                     Foreground="WhiteSmoke"
                     IsTextCompletionEnabled="True"
                     ItemFilter="{Binding ButtonInfoFilter}"
-                    ItemsSource="{Binding ButtonInfo, Converter={StaticResource AppInfoAutoCompleteConverter}}"
+                    ItemsSource="{Binding ButtonInfo, Converter={c:ApplicationInfoForAutoCompleteConverter}}"
                     ValueMemberBinding="{Binding AppDisplayName}"
                     WindowChrome.IsHitTestVisibleInChrome="True">
                     <i:Interaction.Behaviors>
@@ -101,33 +120,31 @@
                         </DataTemplate>
                     </toolkit:AutoCompleteBox.ItemTemplate>
                 </toolkit:AutoCompleteBox>
+
                 <StackPanel
                     Grid.Column="2"
-                    Margin="0,2,0,0"
-                    VerticalAlignment="Top"
+                    Margin="0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Stretch"
                     Orientation="Horizontal">
                     <Button
-                        Width="23"
-                        Height="23"
-                        Margin="5,1,5,0"
+                        Width="40"
+                        Height="Auto"
+                        Margin="0"
                         HorizontalAlignment="Right"
                         Command="{Binding WindowCloseCommand}"
                         CommandParameter="{Binding ElementName=MainWindow1}"
                         Content="r"
                         FontSize="20"
-                        Style="{DynamicResource CaptionButtonStyleKey}" />
+                        Style="{DynamicResource CaptionCloseButtonStyleKey}" />
                 </StackPanel>
             </Grid>
+
             <Menu
                 Grid.Row="1"
                 Background="Black"
                 Foreground="DimGray"
                 Opacity="0.8">
-                <!--<MenuItem Header="ファイル">
-                -->
-                <!--<MenuItem Header="設定"
-                        Foreground="{StaticResource MenuItemForegroundBrush}"/>
-                    <Separator />-->
                 <!--
                     <MenuItem
                         Command="{Binding ApplicationCloseCommand}"
@@ -136,7 +153,7 @@
                         Header="閉じる"
                         InputGestureText="Alt+F4" />
                 </MenuItem>-->
-                <MenuItem Header="ページ">
+                <MenuItem Header="ページ(_P)">
                     <MenuItem
                         Command="{Binding MovePageCommand}"
                         CommandParameter="{StaticResource BoolTrue}"
@@ -161,7 +178,9 @@
                         Header="現在のページを削除"
                         InputGestureText="Ctrl+D" />
                 </MenuItem>
+                <MenuItem Command="{Binding HotKeyCommand}" Header="ホットキー(_H)" />
             </Menu>
+
             <Grid Grid.Row="2">
                 <i:Interaction.Behaviors>
                     <b:DragAcceptBehavior CurrentPageNo="{Binding CurrentPageNo}" Description="{Binding Description}" />
@@ -180,6 +199,7 @@
                     <RowDefinition Height="80*" />
                     <RowDefinition Height="80*" />
                 </Grid.RowDefinitions>
+
                 <Rectangle
                     Grid.Row="0"
                     Grid.RowSpan="5"
@@ -207,6 +227,7 @@
                         <b:MovePageBehavior Command="{Binding MovePageCommand}" IsNext="{StaticResource BoolTrue}" />
                     </i:Interaction.Behaviors>
                 </Rectangle>
+
                 <Grid
                     x:Name="dummyPanel"
                     Grid.Row="0"

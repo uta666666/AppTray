@@ -16,6 +16,7 @@ using Livet.Messaging;
 using System.Windows.Controls;
 using System.Globalization;
 using System.Threading;
+using Reactive.Bindings;
 
 namespace AppTray.ViewModels {
     public class MainViewModel : BindableBase {
@@ -90,18 +91,7 @@ namespace AppTray.ViewModels {
                 new SystemMenuItem() {
                     MenuID = 0x0001,
                     MenuName = "ホットキー設定",
-                    Command = new RelayCommand(() => {
-                        IsShowingDialog = true;
-
-                        using(var vm = new HotKeySettingViewModel(_hotKey)) {
-                            Messenger.Raise(new TransitionMessage(vm, "HotKeySettingWindowMessageKey"));
-                            if (vm.IsUpdate) {
-                                HotKey = new HotKey(){ Key = vm.Key, Modifiers = vm.ModifierKeys };
-                            }
-                        }
-
-                        IsShowingDialog = false;
-                    })
+                    Command = HotKeyCommand
                 },
                 new SystemMenuItem() {
                     IsSeparator = true
@@ -156,7 +146,8 @@ namespace AppTray.ViewModels {
                 if (app == null) {
                     return;
                 }
-                if (!app.Exist()) {
+                if (!app.Exist())
+                {
                     ConfirmForDeleteNotExistApp(int.Parse(buttonNo));
                     return;
                 }
@@ -175,12 +166,22 @@ namespace AppTray.ViewModels {
                 app.Execute(true);
             });
 
-            ExecuteAppFromAppNameCommand = new RelayCommand<AppInfo>((app) => {
+            ExecuteAppFromAppNameCommand = new RelayCommand<object[]>((object[] args) => {
+                var app = (AppInfo)args[0];
+                var isAdmin = (bool)args[1];
+
                 if (!app.Exist()) {
                     ConfirmForDeleteNotExistApp(_buttonInfo.GetButtonNo(app));
                     return;
                 }
-                app.Execute(false);
+                if (isAdmin)
+                {
+                    app.Execute(true);
+                }
+                else
+                {
+                    app.Execute(app.IsAdmin);
+                }
             });
 
             DeleteAppCommand = new RelayCommand<string>((buttonNo) => {
@@ -202,6 +203,31 @@ namespace AppTray.ViewModels {
                 Messenger.Raise(new TransitionMessage(setting, "SettingWindowMessageKey"));
 
                 if (setting.IsUpdate) {
+                    _buttonInfo.Add(key, setting.GetAppInfo());
+                    RaisePropertyChanged(nameof(ButtonInfo));
+                }
+
+                IsShowingDialog = false;
+            });
+
+            CallCommandWindowCommand = new ReactiveCommand<string>();
+            CallCommandWindowCommand.Subscribe((buttonNo) =>
+            {
+                IsShowingDialog = true;
+
+                int key = (int.Parse(buttonNo));
+                var app = _buttonInfo[key];
+                if (app == null)
+                {
+                    app = new AppInfo();
+                }
+
+                var setting = new CommandViewModel();
+                setting.SetAppInfo(app);
+                Messenger.Raise(new TransitionMessage(setting, "CommandWindowMessageKey"));
+
+                if (setting.IsUpdate)
+                {
                     _buttonInfo.Add(key, setting.GetAppInfo());
                     RaisePropertyChanged(nameof(ButtonInfo));
                 }
@@ -237,6 +263,22 @@ namespace AppTray.ViewModels {
                 RaisePropertyChanged(nameof(ButtonInfo));
                 RaisePropertyChanged(nameof(PageCount));
                 RaisePropertyChanged(nameof(CurrentPageNo));
+            });
+
+            HotKeyCommand = new RelayCommand(() =>
+            {
+                IsShowingDialog = true;
+
+                using (var vm = new HotKeySettingViewModel(_hotKey))
+                {
+                    Messenger.Raise(new TransitionMessage(vm, "HotKeySettingWindowMessageKey"));
+                    if (vm.IsUpdate)
+                    {
+                        HotKey = new HotKey() { Key = vm.Key, Modifiers = vm.ModifierKeys };
+                    }
+                }
+
+                IsShowingDialog = false;
             });
         }
 
@@ -297,6 +339,14 @@ namespace AppTray.ViewModels {
         /// 
         /// </summary>
         public ICommand CallSubWindowCommand { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand HotKeyCommand { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public ReactiveCommand<string> CallCommandWindowCommand { get; private set; }
 
 
         private double _top;
