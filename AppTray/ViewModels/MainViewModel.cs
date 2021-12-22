@@ -17,6 +17,8 @@ using System.Windows.Controls;
 using System.Globalization;
 using System.Threading;
 using Reactive.Bindings;
+using System.Reactive.Linq;
+using Reactive.Bindings.Extensions;
 
 namespace AppTray.ViewModels {
     public class MainViewModel : BindableBase {
@@ -24,6 +26,9 @@ namespace AppTray.ViewModels {
         /// 
         /// </summary>
         public MainViewModel() {
+            //アプリの設定
+            StaticValues.SystemSetting = new SystemSetting().Load(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location));
+
             //管理者アイコン取得
             ShieldImage = ShieldIcon.GetBitmapSource(true);
             PageNavigatorVisibility = Visibility.Collapsed;
@@ -56,6 +61,9 @@ namespace AppTray.ViewModels {
                 _buttonInfo.Move(e.FromPageNo, e.FromButtonNo, e.ToPageNo, e.ToButtonNo, befInfo);
                 RaisePropertyChanged(nameof(ButtonInfo));
             };
+            //透過度
+            Opacity = StaticValues.SystemSetting.ToReactivePropertyAsSynchronized(x => x.Opacity);
+            //SearchTextBoxBackground = new ReactiveProperty<Drawing>(DrawMyText("Search"));
 
             //コマンド作成
             CreateCommand();
@@ -235,6 +243,27 @@ namespace AppTray.ViewModels {
                 IsShowingDialog = false;
             });
 
+            CallSystemSettingWindowCommand = new ReactiveCommand();
+            CallSystemSettingWindowCommand.Subscribe(() =>
+            {
+                IsShowingDialog = true;
+
+                var vm = new SystemSettingViewModel();
+                vm.SetProperty(StaticValues.SystemSetting);
+                Messenger.Raise(new TransitionMessage(vm, "SystemSettingWindowMessageKey"));
+
+                if (vm.IsUpdate)
+                {
+                    var returnValue = vm.Return();
+                    StaticValues.SystemSetting.IsOpenOnTaskBar = returnValue.IsOpenOnTaskBar;
+                    StaticValues.SystemSetting.Opacity = returnValue.Opacity;
+                    StaticValues.SystemSetting.Save(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location));
+                    //RaisePropertyChanged(nameof(Opacity));
+                }
+
+                IsShowingDialog = false;
+            });
+
             CallSubWindowCommand = new RelayCommand<string>((buttonNo) => {
                 var sub = new SubListViewModel();
                 Messenger.Raise(new TransitionMessage(sub, "SubListWindowMessageKey"));
@@ -347,6 +376,10 @@ namespace AppTray.ViewModels {
         /// 
         /// </summary>
         public ReactiveCommand<string> CallCommandWindowCommand { get; private set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public ReactiveCommand CallSystemSettingWindowCommand { get; private set; }
 
 
         private double _top;
@@ -522,6 +555,12 @@ namespace AppTray.ViewModels {
                 SetProperty(ref _hotKey, value);
             }
         }
+
+        /// <summary>
+        /// 透過度
+        /// </summary>
+        public ReactiveProperty<double> Opacity { get; set; }
+
 
         /// <summary>
         /// 管理者アイコン

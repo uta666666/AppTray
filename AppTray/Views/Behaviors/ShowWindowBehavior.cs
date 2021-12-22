@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AppTray.Commons;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -52,7 +53,8 @@ namespace AppTray.Views.Behaviors {
         }
 
         private void AssociatedObject_StateChanged(object sender, EventArgs e) {
-            if (AssociatedObject.WindowState == WindowState.Normal) {
+            if (AssociatedObject.WindowState == WindowState.Normal)
+            {
                 //Point screenPoint = CursorInfo.GetCursorPosition();
                 //Left = screenPoint.X - (AssociatedObject.Width / 2);
                 //double diff = screenPoint.Y - SystemParameters.WorkArea.Height;
@@ -65,8 +67,22 @@ namespace AppTray.Views.Behaviors {
                 System.Windows.Media.CompositionTarget ct = src.CompositionTarget;
                 System.Windows.Point p = ct.TransformFromDevice.Transform(wp);
                 Left = p.X - (AssociatedObject.Width / 2);
-                double diff = p.Y - SystemParameters.WorkArea.Height;
-                Top = p.Y - AssociatedObject.Height - diff;
+                if (StaticValues.SystemSetting.IsOpenOnTaskBar) { 
+                    double diff = p.Y - SystemParameters.WorkArea.Height;
+                    Top = p.Y - AssociatedObject.Height - diff;
+                }
+                else
+                {
+                    if ((p.Y + AssociatedObject.Height) > SystemParameters.WorkArea.Height)
+                    {
+                        double diff = p.Y - SystemParameters.WorkArea.Height;
+                        Top = p.Y - AssociatedObject.Height - diff;
+                    }
+                    else
+                    {
+                        Top = p.Y;
+                    }
+                }
             }
         }
     }

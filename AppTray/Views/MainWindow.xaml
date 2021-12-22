@@ -49,6 +49,9 @@
         <l:InteractionMessageTrigger MessageKey="HotKeySettingWindowMessageKey" Messenger="{Binding Messenger}">
             <l:TransitionInteractionMessageAction Mode="Modal" WindowType="{x:Type local:HotKeySettingWindow}" />
         </l:InteractionMessageTrigger>
+        <l:InteractionMessageTrigger MessageKey="SystemSettingWindowMessageKey" Messenger="{Binding Messenger}">
+            <l:TransitionInteractionMessageAction Mode="Modal" WindowType="{x:Type local:SystemSettingWindow}" />
+        </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>
 
     <i:Interaction.Behaviors>
@@ -65,7 +68,7 @@
     </i:Interaction.Behaviors>
 
     <Border BorderBrush="DimGray" BorderThickness="1">
-        <Grid Background="Black" Opacity="0.8">
+        <Grid Background="Black" Opacity="{Binding Opacity.Value}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
                 <RowDefinition Height="20" />
@@ -99,7 +102,6 @@
                     Grid.Column="1"
                     Height="23"
                     Margin="40,2,40,2"
-                    Background="#101010"
                     Foreground="WhiteSmoke"
                     IsTextCompletionEnabled="True"
                     ItemFilter="{Binding ButtonInfoFilter}"
@@ -108,17 +110,29 @@
                     WindowChrome.IsHitTestVisibleInChrome="True">
                     <i:Interaction.Behaviors>
                         <b:ExecuteSelectedAppBehavior Command="{Binding ExecuteAppFromAppNameCommand}" />
+                        <b:WaterMarkBehavior />
                     </i:Interaction.Behaviors>
                     <toolkit:AutoCompleteBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock
                                     MinWidth="250"
+                                    VerticalAlignment="Center"
                                     Foreground="WhiteSmoke"
                                     Text="{Binding AppDisplayName}" />
                             </StackPanel>
                         </DataTemplate>
                     </toolkit:AutoCompleteBox.ItemTemplate>
+                    <toolkit:AutoCompleteBox.Background>
+                        <ImageBrush
+                            AlignmentX="Right"
+                            AlignmentY="Bottom"
+                            ImageSource="../wm_searchtext.png"
+                            Opacity="0.6"
+                            Stretch="Uniform"
+                            Viewbox="0.05,-0.3,1,1.6">
+                        </ImageBrush>
+                    </toolkit:AutoCompleteBox.Background>
                 </toolkit:AutoCompleteBox>
 
                 <StackPanel
@@ -144,7 +158,7 @@
                 Grid.Row="1"
                 Background="Black"
                 Foreground="DimGray"
-                Opacity="0.8">
+                Opacity="{Binding Opacity.Value}">
                 <!--
                     <MenuItem
                         Command="{Binding ApplicationCloseCommand}"
@@ -179,6 +193,7 @@
                         InputGestureText="Ctrl+D" />
                 </MenuItem>
                 <MenuItem Command="{Binding HotKeyCommand}" Header="ホットキー(_H)" />
+                <MenuItem Command="{Binding CallSystemSettingWindowCommand}" Header="設定(_S)" />
             </Menu>
 
             <Grid Grid.Row="2">
@@ -269,7 +284,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="1">
                     <i:Interaction.Behaviors>
@@ -289,7 +304,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="2">
                     <i:Interaction.Behaviors>
@@ -309,7 +324,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="3">
                     <i:Interaction.Behaviors>
@@ -329,7 +344,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="4">
                     <i:Interaction.Behaviors>
@@ -349,7 +364,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="5">
                     <i:Interaction.Behaviors>
@@ -370,7 +385,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="6">
                     <i:Interaction.Behaviors>
@@ -391,7 +406,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="7">
                     <i:Interaction.Behaviors>
@@ -412,7 +427,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="8">
                     <i:Interaction.Behaviors>
@@ -433,7 +448,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="9">
                     <i:Interaction.Behaviors>
@@ -454,7 +469,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="10">
                     <i:Interaction.Behaviors>
@@ -475,7 +490,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="11">
                     <i:Interaction.Behaviors>
@@ -496,7 +511,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="12">
                     <i:Interaction.Behaviors>
@@ -517,7 +532,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="13">
                     <i:Interaction.Behaviors>
@@ -538,7 +553,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="14">
                     <i:Interaction.Behaviors>
@@ -559,7 +574,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="15">
                     <i:Interaction.Behaviors>
@@ -580,7 +595,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="16">
                     <i:Interaction.Behaviors>
@@ -601,7 +616,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="17">
                     <i:Interaction.Behaviors>
@@ -622,7 +637,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="18">
                     <i:Interaction.Behaviors>
@@ -643,7 +658,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="19">
                     <i:Interaction.Behaviors>
@@ -664,7 +679,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="20">
                     <i:Interaction.Behaviors>
@@ -685,7 +700,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="21">
                     <i:Interaction.Behaviors>
@@ -706,7 +721,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="22">
                     <i:Interaction.Behaviors>
@@ -727,7 +742,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="23">
                     <i:Interaction.Behaviors>
@@ -748,7 +763,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="24">
                     <i:Interaction.Behaviors>
@@ -769,7 +784,7 @@
                     Background="Black"
                     Command="{Binding ExecuteAppCommand}"
                     CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
-                    Opacity="0.8"
+                    Opacity="{Binding Opacity.Value}"
                     Style="{StaticResource ApplicationButton}"
                     Tag="25">
                     <i:Interaction.Behaviors>
