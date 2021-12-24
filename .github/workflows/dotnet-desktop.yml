@@ -39,7 +39,7 @@ jobs:
         
     - name: Build Solution
       run: |
-        msbuild.exe AppTraySolution/AppTray.csproj /p:configuration="Release"
+        msbuild.exe AppTray/AppTray.csproj /p:configuration="Release"
         7z a -tzip ./App-win-framework.zip ./AppTray/bin/Release/*
       
     - name: Create Release
