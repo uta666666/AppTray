@@ -25,6 +25,7 @@ namespace AppTray.Views.Behaviors
         {
             AssociatedObject.TextChanged -= AssociatedObject_TextChanged;
             AssociatedObject.Initialized -= AssociatedObject_Initialized;
+            AssociatedObject.DropDownClosed -= AssociatedObject_DropDownClosed;
 
             base.OnDetaching();
         }
@@ -53,7 +54,7 @@ namespace AppTray.Views.Behaviors
             }
             else
             {
-                AssociatedObject.Background = new SolidColorBrush(Colors.Black);
+                AssociatedObject.Background = new SolidColorBrush(Color.FromArgb(255,10,10,10));
             }
         }
 
