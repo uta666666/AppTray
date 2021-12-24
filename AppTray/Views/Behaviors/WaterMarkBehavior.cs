@@ -41,15 +41,6 @@ namespace AppTray.Views.Behaviors
         {
             if (string.IsNullOrEmpty(AssociatedObject.Text) && !AssociatedObject.IsDropDownOpen)
             {
-                //AssociatedObject.Background.Opacity = 0.5;
-                //// Create an ImageBrush.
-                //ImageBrush textImageBrush = new ImageBrush();
-                //textImageBrush.ImageSource = new BitmapImage(new Uri(@"../wm_searchtext.png", UriKind.Relative));
-                //textImageBrush.AlignmentX = AlignmentX.Left;
-                //textImageBrush.AlignmentY = AlignmentY.Center;
-                //textImageBrush.Stretch = Stretch.Uniform;
-                //// Use the brush to paint the button's background.
-                //AssociatedObject.Background = textImageBrush;
                 AssociatedObject.Background = _brash;
             }
             else

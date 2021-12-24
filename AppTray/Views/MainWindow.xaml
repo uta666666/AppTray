@@ -108,7 +108,7 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock
-                                    MinWidth="250"
+                                    MinWidth="220"
                                     VerticalAlignment="Center"
                                     Foreground="WhiteSmoke"
                                     Text="{Binding AppDisplayName}" />
