@@ -12,7 +12,7 @@ using Reactive.Bindings.Extensions;
 
 namespace AppTray.ViewModels
 {
-    public class CommandViewModel : BindableBase
+    public class CommandViewModel : BaseSettingViewModel
     {
         public CommandViewModel()
         {
@@ -58,7 +58,7 @@ namespace AppTray.ViewModels
             //}
         }
 
-        public void SetAppInfo(AppInfo info)
+        public override void SetAppInfo(AppInfo info)
         {
             if (info is AppInfoCmd)
             {
@@ -74,7 +74,7 @@ namespace AppTray.ViewModels
             }
         }
 
-        public AppInfo GetAppInfo()
+        public override AppInfo GetAppInfo()
         {
             return _appInfo;
         }
@@ -94,7 +94,5 @@ namespace AppTray.ViewModels
         public ReactiveProperty<List<string>> Command { get; set; }
 
         public ReactiveProperty<bool> IsAdmin { get; set; }
-
-        public bool IsUpdate { get; set; }
     }
 }

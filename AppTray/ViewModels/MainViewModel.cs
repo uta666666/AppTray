@@ -206,9 +206,19 @@ namespace AppTray.ViewModels {
                     app = new AppInfo();
                 }
 
-                SettingViewModel setting = new SettingViewModel();
-                setting.SetAppInfo(app);
-                Messenger.Raise(new TransitionMessage(setting, "SettingWindowMessageKey"));
+                BaseSettingViewModel setting;
+                if (app is AppInfoCmd)
+                {
+                    setting = new CommandViewModel();
+                    setting.SetAppInfo(app);
+                    Messenger.Raise(new TransitionMessage(setting, "CommandWindowMessageKey"));
+                }
+                else
+                {
+                    setting = new SettingViewModel();
+                    setting.SetAppInfo(app);
+                    Messenger.Raise(new TransitionMessage(setting, "SettingWindowMessageKey"));
+                }
 
                 if (setting.IsUpdate) {
                     _buttonInfo.Add(key, setting.GetAppInfo());
@@ -265,8 +275,12 @@ namespace AppTray.ViewModels {
             });
 
             CallSubWindowCommand = new RelayCommand<string>((buttonNo) => {
+                IsShowingDialog = true;
+
                 var sub = new SubListViewModel();
                 Messenger.Raise(new TransitionMessage(sub, "SubListWindowMessageKey"));
+
+                IsShowingDialog = false;
             });
 
             MovePageCommand = new RelayCommand<bool>((isNext) => {

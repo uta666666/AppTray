@@ -80,10 +80,14 @@
                         Command="{Binding CallSettingWindowCommand}"
                         CommandParameter="{Binding Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"
                         Header="設定" />
-                    <MenuItem
+                    <!--<MenuItem
                         Command="{Binding CallCommandWindowCommand}"
                         CommandParameter="{Binding Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"
-                        Header="コマンドを設定" />
+                        Header="コマンドを設定" />-->
+                    <!--<MenuItem
+                        Command="{Binding CallSubWindowCommand}"
+                        CommandParameter="{Binding Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"
+                        Header="コマンドを設定" />-->
                     <MenuItem
                         Command="{Binding DeleteAppCommand}"
                         CommandParameter="{Binding Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"

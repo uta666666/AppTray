@@ -51,9 +51,9 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="35" />
                 </Grid.ColumnDefinitions>
-                <Grid.Resources>
+                <!--<Grid.Resources>
                     <ResourceDictionary Source="../CaptionButtonStyle.xaml" />
-                </Grid.Resources>
+                </Grid.Resources>-->
                 <Grid.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Setting" />

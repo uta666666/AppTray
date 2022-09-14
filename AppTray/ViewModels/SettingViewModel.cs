@@ -13,10 +13,11 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Reactive.Linq;
 using Reactive.Bindings.Extensions;
+using Livet.Messaging.IO;
 
 namespace AppTray.ViewModels
 {
-    public class SettingViewModel : BindableBase
+    public class SettingViewModel : BaseSettingViewModel
     {
         public SettingViewModel()
         {
@@ -27,6 +28,25 @@ namespace AppTray.ViewModels
             IsAdmin = new ReactiveProperty<bool>();
             AppIcon = new ReactiveProperty<BitmapSource>();
             CanClose = new ReactiveProperty<bool>();
+
+            SelectIconCommand = FilePath.Select(x => !string.IsNullOrWhiteSpace(x)).ToReactiveCommand();
+            SelectIconCommand.Subscribe(async () =>
+            {
+                // メッセージを作成
+                var message = new OpeningFileSelectionMessage("MessageKey_OpenFile");
+
+                // メッセージを送信
+                await Messenger.RaiseAsync(message);
+
+                // メッセージへの応答がない場合は何もしない
+                // ファイル選択ダイアログでキャンセルされた場合も応答なしになる
+                if (message.Response == null) return;
+
+                // 開いたファイルのパスを更新
+                _appInfo.SetIconAndBitmapSource(message.Response.First());
+                AppIcon.Value = _appInfo.ImageSource;
+                IsUpdate = true;
+            });
 
             OKCommand = new[] { AppDisplayName.Select(x => string.IsNullOrWhiteSpace(x)), FilePath.Select(x => string.IsNullOrWhiteSpace(x)) }.CombineLatestValuesAreAllFalse().ToReactiveCommand();
             OKCommand.Subscribe(() =>
@@ -45,8 +65,6 @@ namespace AppTray.ViewModels
                     CanClose.Value = true;
                     return;
                 }
-                //キャンセル扱い
-                IsUpdate = false;
                 CanClose.Value = true;
             });
 
@@ -98,7 +116,7 @@ namespace AppTray.ViewModels
             }
         }
 
-        public void SetAppInfo(AppInfo info)
+        public override void SetAppInfo(AppInfo info)
         {
             _appInfo = info;
             AppDisplayName.Value = info.AppDisplayName;
@@ -107,9 +125,10 @@ namespace AppTray.ViewModels
             AppIcon.Value = _appInfo.ImageSource;
             WorkDirectory.Value = _appInfo.WorkDirectory;
             IsAdmin.Value = _appInfo.IsAdmin;
+            IsUpdate = false;
         }
 
-        public AppInfo GetAppInfo()
+        public override AppInfo GetAppInfo()
         {
             return _appInfo;
         }
@@ -147,6 +166,8 @@ namespace AppTray.ViewModels
 
         public ReactiveCommand CancelCommand { get; private set; }
 
+        public ReactiveCommand SelectIconCommand { get; private set; }
+
         public ReactiveProperty<string> AppDisplayName { get; set; }
 
         public ReactiveProperty<string> FilePath { get; set; }
@@ -161,6 +182,5 @@ namespace AppTray.ViewModels
 
         public ReactiveProperty<bool> CanClose { get; set; }
 
-        public bool IsUpdate { get; set; }
     }
 }

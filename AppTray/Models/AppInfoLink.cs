@@ -6,23 +6,31 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace AppTray.Models {
-    public class AppInfoLink : AppInfo {
+namespace AppTray.Models
+{
+    public class AppInfoLink : AppInfo
+    {
+        public AppInfoLink() : base(){ }
 
-        public AppInfoLink(string filePath) : base() {
+        public AppInfoLink(string filePath) : base()
+        {
             var objShortcut = LoadLink(filePath);
-            if (File.Exists(objShortcut.TargetPath)) {
+            if (File.Exists(objShortcut.TargetPath))
+            {
                 FilePath = objShortcut.TargetPath;
                 Arguments = objShortcut.Arguments;
                 WorkDirectory = objShortcut.WorkingDirectory;
-            } else {
+            }
+            else
+            {
                 FilePath = filePath;
             }
             AppDisplayName = Path.GetFileNameWithoutExtension(filePath);
             SetIconAndBitmapSource(FilePath);
         }
 
-        private IWshRuntimeLibrary.IWshShortcut LoadLink(string filePath) {
+        private IWshRuntimeLibrary.IWshShortcut LoadLink(string filePath)
+        {
             var shell = new IWshRuntimeLibrary.WshShell();
             var objShortcut = shell.CreateShortcut(filePath) as IWshRuntimeLibrary.IWshShortcut;
             return objShortcut;

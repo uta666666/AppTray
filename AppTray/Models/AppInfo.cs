@@ -60,7 +60,7 @@ namespace AppTray.Models
             return Icon.ToBitmap();
         }
 
-        protected void SetIconAndBitmapSource(string filePath)
+        public void SetIconAndBitmapSource(string filePath)
         {
             var url = new Uri(filePath);
             if (!url.IsUnc)

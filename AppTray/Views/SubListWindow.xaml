@@ -33,7 +33,6 @@
         <b:SearchBehavior InputControlName="{Binding Name, ElementName=textBoxSearch}" />
         <b:ScrollWindowBehavior MiddleClickCommand="{Binding AddPageCommand}" ScrollCommand="{Binding MovePageCommand}" />
         <b:ShortcutBehavior ShortcutCommand="{Binding Shortcuts}" />
-        <b:ShowSystemContextMenuBehavior MenuItems="{Binding SystemMenuItems}" />
     </i:Interaction.Behaviors>
     <Window.DataContext>
         <vm:MainViewModel />
@@ -50,9 +49,9 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="35" />
                 </Grid.ColumnDefinitions>
-                <Grid.Resources>
+                <!--<Grid.Resources>
                     <ResourceDictionary Source="../CaptionButtonStyle.xaml" />
-                </Grid.Resources>
+                </Grid.Resources>-->
                 <Grid.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Setting" />

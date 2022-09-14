@@ -9,6 +9,8 @@ namespace AppTray.Models
 {
     public class AppInfoFile : AppInfo
     {
+        public AppInfoFile() : base() { }
+
         public AppInfoFile(string filePath) : base()
         {
             FilePath = filePath;

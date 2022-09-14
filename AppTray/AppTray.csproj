@@ -122,6 +122,7 @@
     <Compile Include="Models\SystemSetting.cs" />
     <Compile Include="ViewModels\CommandViewModel.cs" />
     <Compile Include="ViewModels\HotKeySettingViewModel.cs" />
+    <Compile Include="ViewModels\BaseSettingViewModel.cs" />
     <Compile Include="ViewModels\SettingViewModel.cs" />
     <Compile Include="ViewModels\SubListViewModel.cs" />
     <Compile Include="ViewModels\SystemSettingViewModel.cs" />

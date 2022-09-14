@@ -44,6 +44,9 @@
         <l:InteractionMessageTrigger MessageKey="SystemSettingWindowMessageKey" Messenger="{Binding Messenger}">
             <l:TransitionInteractionMessageAction Mode="Modal" WindowType="{x:Type local:SystemSettingWindow}" />
         </l:InteractionMessageTrigger>
+        <l:InteractionMessageTrigger MessageKey="SubListWindowMessageKey" Messenger="{Binding Messenger}">
+            <l:TransitionInteractionMessageAction Mode="Modal" WindowType="{x:Type local:SubListWindow}" />
+        </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>
 
     <i:Interaction.Behaviors>

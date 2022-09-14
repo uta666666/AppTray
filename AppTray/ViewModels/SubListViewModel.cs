@@ -8,5 +8,9 @@ using System.Threading.Tasks;
 
 namespace AppTray.ViewModels {
     public class SubListViewModel : BindableBase {
+        public SubListViewModel()
+        {
+
+        }
     }
 }

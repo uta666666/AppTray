@@ -7,6 +7,7 @@ namespace AppTray.Models
 {
     public class AppInfoExe : AppInfo
     {
+        public AppInfoExe() : base() { }
 
         public AppInfoExe(string filePath) : base()
         {
