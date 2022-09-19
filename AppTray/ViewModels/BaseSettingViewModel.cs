@@ -10,8 +10,6 @@ namespace AppTray.ViewModels
 {
     public abstract class BaseSettingViewModel : BindableBase
     {
-        public abstract void SetAppInfo(AppInfo info);
-
         public abstract AppInfo GetAppInfo();
 
         public bool IsUpdate { get; set; }

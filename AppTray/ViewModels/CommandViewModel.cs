@@ -21,7 +21,14 @@ namespace AppTray.ViewModels
             Command = new ReactiveProperty<List<string>>(new List<string>());
             IsAdmin = new ReactiveProperty<bool>(false);
 
-            OKCommand = new[] { Command.Select(x => x.Where(y => !string.IsNullOrWhiteSpace(y)).Count() == 0), AppDisplayName.Select(x => string.IsNullOrWhiteSpace(x))}.CombineLatestValuesAreAllFalse().ToReactiveCommand();
+            OKCommand = new[] { Command.Select(x => x.Where(y => !string.IsNullOrWhiteSpace(y)).Count() == 0), AppDisplayName.Select(x => string.IsNullOrWhiteSpace(x)) }.CombineLatestValuesAreAllFalse().ToReactiveCommand();
+            CancelCommand = new ReactiveCommand();
+        }
+
+        public CommandViewModel(AppInfo info) : this()
+        {
+            SetAppInfo(info);
+             
             OKCommand.Subscribe(() =>
             {
                 UpdateAppInfo();
@@ -29,7 +36,6 @@ namespace AppTray.ViewModels
                 CanClose.Value = true;
             });
 
-            CancelCommand = new ReactiveCommand();
             CancelCommand.Subscribe(() =>
             {
                 IsUpdate = false;
@@ -37,11 +43,16 @@ namespace AppTray.ViewModels
             });
         }
 
+        public override AppInfo GetAppInfo()
+        {
+            return _appInfo;
+        }
+
         private void UpdateAppInfo()
         {
             _appInfo.Category = AppCategory.Command;
-            _appInfo.FilePath = String.Empty;
-            _appInfo.Arguments = String.Empty;
+            _appInfo.FilePath = string.Empty;
+            _appInfo.Arguments = string.Empty;
             _appInfo.WorkDirectory = string.Empty;
 
             if (_appInfo.AppDisplayName != AppDisplayName.Value)
@@ -58,7 +69,7 @@ namespace AppTray.ViewModels
             //}
         }
 
-        public override void SetAppInfo(AppInfo info)
+        private void SetAppInfo(AppInfo info)
         {
             if (info is AppInfoCmd)
             {
@@ -72,11 +83,6 @@ namespace AppTray.ViewModels
             {
                 _appInfo = new AppInfoCmd();
             }
-        }
-
-        public override AppInfo GetAppInfo()
-        {
-            return _appInfo;
         }
 
 

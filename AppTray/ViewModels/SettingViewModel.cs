@@ -14,11 +14,15 @@ using System.Windows.Media.Imaging;
 using System.Reactive.Linq;
 using Reactive.Bindings.Extensions;
 using Livet.Messaging.IO;
+using AppTray.Views.Messages;
 
 namespace AppTray.ViewModels
 {
     public class SettingViewModel : BaseSettingViewModel
     {
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public SettingViewModel()
         {
             AppDisplayName = new ReactiveProperty<string>();
@@ -30,25 +34,27 @@ namespace AppTray.ViewModels
             CanClose = new ReactiveProperty<bool>();
 
             SelectIconCommand = FilePath.Select(x => !string.IsNullOrWhiteSpace(x)).ToReactiveCommand();
+            OKCommand = new[] { AppDisplayName.Select(x => string.IsNullOrWhiteSpace(x)), FilePath.Select(x => string.IsNullOrWhiteSpace(x)) }.CombineLatestValuesAreAllFalse().ToReactiveCommand();
+            CancelCommand = new ReactiveCommand();
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="info"></param>
+        public SettingViewModel(AppInfo info) : this()
+        {
+            SetAppInfo(info);
+
             SelectIconCommand.Subscribe(async () =>
             {
                 // メッセージを作成
-                var message = new OpeningFileSelectionMessage("MessageKey_OpenFile");
+                var message = new OpeningFileSelectionMessageEx("MessageKey_SelectIcon");
 
                 // メッセージを送信
-                await Messenger.RaiseAsync(message);
-
-                // メッセージへの応答がない場合は何もしない
-                // ファイル選択ダイアログでキャンセルされた場合も応答なしになる
-                if (message.Response == null) return;
-
-                // 開いたファイルのパスを更新
-                _appInfo.SetIconAndBitmapSource(message.Response.First());
-                AppIcon.Value = _appInfo.ImageSource;
-                IsUpdate = true;
+                await Messenger.RaiseAsync(message);                
             });
 
-            OKCommand = new[] { AppDisplayName.Select(x => string.IsNullOrWhiteSpace(x)), FilePath.Select(x => string.IsNullOrWhiteSpace(x)) }.CombineLatestValuesAreAllFalse().ToReactiveCommand();
             OKCommand.Subscribe(() =>
             {
                 if (HasChanges())
@@ -68,12 +74,28 @@ namespace AppTray.ViewModels
                 CanClose.Value = true;
             });
 
-            CancelCommand = new ReactiveCommand();
             CancelCommand.Subscribe(() =>
             {
                 IsUpdate = false;
                 CanClose.Value = true;//キャンセルは常にtrue
             });
+        }
+
+        public override AppInfo GetAppInfo()
+        {
+            return _appInfo;
+        }
+
+        public void FileSelected(OpeningFileSelectionMessageEx message)
+        {
+            // メッセージへの応答がない場合は何もしない
+            // ファイル選択ダイアログでキャンセルされた場合も応答なしになる
+            if (message.Response == null) return;
+
+            // 開いたファイルのパスを更新
+            _appInfo.SetIconAndBitmapSource(message.Response.First());
+            AppIcon.Value = _appInfo.ImageSource;
+            IsUpdate = true;
         }
 
         private bool HasChanges()
@@ -116,7 +138,7 @@ namespace AppTray.ViewModels
             }
         }
 
-        public override void SetAppInfo(AppInfo info)
+        private void SetAppInfo(AppInfo info)
         {
             _appInfo = info;
             AppDisplayName.Value = info.AppDisplayName;
@@ -126,11 +148,6 @@ namespace AppTray.ViewModels
             WorkDirectory.Value = _appInfo.WorkDirectory;
             IsAdmin.Value = _appInfo.IsAdmin;
             IsUpdate = false;
-        }
-
-        public override AppInfo GetAppInfo()
-        {
-            return _appInfo;
         }
 
         private AppInfo AppInfoFactory(string filePath)

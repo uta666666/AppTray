@@ -2,11 +2,13 @@
     x:Class="AppTray.Views.SettingWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:actions="clr-namespace:AppTray.Views.Actions"
     xmlns:b="clr-namespace:AppTray.Views.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:messages="clr-namespace:AppTray.Views.Messages"
     xmlns:vm="clr-namespace:AppTray.ViewModels"
     x:Name="Setting"
     Title="設定"
@@ -30,8 +32,15 @@
     </i:Interaction.Behaviors>
 
     <i:Interaction.Triggers>
-        <l:InteractionMessageTrigger MessageKey="MessageKey_OpenFile" Messenger="{Binding Path=Messenger}">
-            <l:OpenFileDialogInteractionMessageAction />
+        <l:InteractionMessageTrigger MessageKey="MessageKey_SelectIcon" Messenger="{Binding Path=Messenger}">
+            <actions:OpenFileDialogAction>
+                <l:DirectInteractionMessage CallbackMethodName="FileSelected" CallbackMethodTarget="{Binding}">
+                    <messages:OpeningFileSelectionMessageEx
+                        Title="アイコンを選択"
+                        DereferenceLinks="False"
+                        Filter="all files|*.*|exe|*.exe|icon|*.ico" />
+                </l:DirectInteractionMessage>
+            </actions:OpenFileDialogAction>
         </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>
 

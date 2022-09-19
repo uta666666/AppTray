@@ -126,6 +126,7 @@
     <Compile Include="ViewModels\SettingViewModel.cs" />
     <Compile Include="ViewModels\SubListViewModel.cs" />
     <Compile Include="ViewModels\SystemSettingViewModel.cs" />
+    <Compile Include="Views\Actions\OpenFileDialogAction.cs" />
     <Compile Include="Views\Behaviors\HotKeyBehavior.cs" />
     <Compile Include="Views\Behaviors\KeyToTextBehavior.cs" />
     <Compile Include="Views\Behaviors\MovePageBehavior.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="Views\HotKeySettingWindow.xaml.cs">
       <DependentUpon>HotKeySettingWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Messages\OpeningFileSelectionMessageEx.cs" />
     <Compile Include="Views\SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
     </Compile>

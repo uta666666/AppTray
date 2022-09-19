@@ -209,14 +209,12 @@ namespace AppTray.ViewModels {
                 BaseSettingViewModel setting;
                 if (app is AppInfoCmd)
                 {
-                    setting = new CommandViewModel();
-                    setting.SetAppInfo(app);
+                    setting = new CommandViewModel(app);
                     Messenger.Raise(new TransitionMessage(setting, "CommandWindowMessageKey"));
                 }
                 else
                 {
-                    setting = new SettingViewModel();
-                    setting.SetAppInfo(app);
+                    setting = new SettingViewModel(app);
                     Messenger.Raise(new TransitionMessage(setting, "SettingWindowMessageKey"));
                 }
 
@@ -240,8 +238,7 @@ namespace AppTray.ViewModels {
                     app = new AppInfo();
                 }
 
-                var setting = new CommandViewModel();
-                setting.SetAppInfo(app);
+                var setting = new CommandViewModel(app);
                 Messenger.Raise(new TransitionMessage(setting, "CommandWindowMessageKey"));
 
                 if (setting.IsUpdate)
@@ -258,17 +255,21 @@ namespace AppTray.ViewModels {
             {
                 IsShowingDialog = true;
 
-                var vm = new SystemSettingViewModel();
-                vm.SetProperty(StaticValues.SystemSetting);
+                var vm = new SystemSettingViewModel(StaticValues.SystemSetting, _hotKey);
                 Messenger.Raise(new TransitionMessage(vm, "SystemSettingWindowMessageKey"));
 
                 if (vm.IsUpdate)
                 {
                     var returnValue = vm.Return();
-                    StaticValues.SystemSetting.IsOpenOnTaskBar = returnValue.IsOpenOnTaskBar;
-                    StaticValues.SystemSetting.Opacity = returnValue.Opacity;
+                    StaticValues.SystemSetting.IsOpenOnTaskBar = returnValue.settings.IsOpenOnTaskBar;
+                    StaticValues.SystemSetting.Opacity = returnValue.settings.Opacity;
                     StaticValues.SystemSetting.Save(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location));
                     //RaisePropertyChanged(nameof(Opacity));
+                }
+                if (vm.IsUpdateHotKey)
+                {
+                    var returnValue = vm.Return();
+                    HotKey = new HotKey() { Key = returnValue.hotKey.Key, Modifiers = returnValue.hotKey.Modifiers };
                 }
 
                 IsShowingDialog = false;
