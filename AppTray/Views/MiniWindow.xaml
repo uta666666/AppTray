@@ -1,0 +1,90 @@
+﻿<Window
+    x:Class="AppTray.Views.MiniWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="clr-namespace:AppTray.Views.Behaviors"
+    xmlns:c="clr-namespace:AppTray.Views.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:AppTray.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+    xmlns:vm="clr-namespace:AppTray.ViewModels"
+    Title="MiniWindow"
+    Width="800"
+    Height="60"
+    AllowsTransparency="True"
+    Background="Black"
+    FocusManager.FocusedElement="{Binding ElementName=textBoxSearch}"
+    FontSize="13"
+    WindowStyle="None"
+    mc:Ignorable="d">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="{x:Static SystemParameters.CaptionHeight}" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
+    </WindowChrome.WindowChrome>
+
+    <i:Interaction.Behaviors>
+        <b:SearchBehavior InputControlName="{Binding Name, ElementName=textBoxSearch}" />
+    </i:Interaction.Behaviors>
+
+    <Window.DataContext>
+        <vm:MiniViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <toolkit:AutoCompleteBox
+            x:Name="textBoxSearch"
+            Grid.Row="0"
+            Padding="10,0,10,0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            VerticalContentAlignment="Center"
+            FontSize="35"
+            Foreground="WhiteSmoke"
+            IsTextCompletionEnabled="True"
+            ItemFilter="{Binding ButtonInfoFilter}"
+            ItemsSource="{Binding ButtonInfo.Value, Converter={c:ApplicationInfoForAutoCompleteConverter}}"
+            Opacity="{Binding Opacity.Value}"
+            ValueMemberBinding="{Binding AppDisplayName}"
+            WindowChrome.IsHitTestVisibleInChrome="True">
+            <i:Interaction.Behaviors>
+                <b:ExecuteSelectedAppBehavior Command="{Binding ExecuteAppFromAppNameCommand}" />
+                <b:WaterMarkBehavior />
+            </i:Interaction.Behaviors>
+            <toolkit:AutoCompleteBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image
+                            x:Name="image"
+                            Grid.Column="0"
+                            Width="40"
+                            Height="40"
+                            Margin="10,0,20,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Source="{Binding ImageSource}" />
+                        <TextBlock
+                            MinWidth="220"
+                            VerticalAlignment="Center"
+                            Foreground="WhiteSmoke"
+                            Text="{Binding AppDisplayName}" />
+                    </StackPanel>
+                </DataTemplate>
+            </toolkit:AutoCompleteBox.ItemTemplate>
+            <toolkit:AutoCompleteBox.Background>
+                <ImageBrush
+                    AlignmentX="Right"
+                    AlignmentY="Bottom"
+                    ImageSource="../wm_searchtext.png"
+                    Opacity="0.8"
+                    Stretch="Uniform"
+                    Viewbox="0.05,-0.3,1,1.6" />
+            </toolkit:AutoCompleteBox.Background>
+        </toolkit:AutoCompleteBox>
+    </Grid>
+</Window>

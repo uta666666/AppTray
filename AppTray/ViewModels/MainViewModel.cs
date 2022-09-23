@@ -284,6 +284,18 @@ namespace AppTray.ViewModels {
                 IsShowingDialog = false;
             });
 
+            CallMiniWindowCommand = new ReactiveCommand();
+            CallMiniWindowCommand.Subscribe(() =>
+            {
+                IsShowingDialog = true;
+
+                var vm = new MiniViewModel(_buttonInfo);
+                Messenger.Raise(new TransitionMessage(vm, "MiniWindowMessageKey"));
+
+                IsShowingDialog = false;
+            });
+            
+
             MovePageCommand = new RelayCommand<bool>((isNext) => {
                 if (isNext) {
                     _buttonInfo.NextPage();
@@ -395,6 +407,10 @@ namespace AppTray.ViewModels {
         /// 
         /// </summary>
         public ReactiveCommand CallSystemSettingWindowCommand { get; private set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public ReactiveCommand CallMiniWindowCommand { get; private set; }
 
 
         private double _top;

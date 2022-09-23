@@ -12,6 +12,8 @@ using System.Windows.Markup;
 namespace AppTray.Views.Converters {
     public class ApplicationInfoForAutoCompleteConverter : MarkupExtension, IValueConverter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            if(value == null) return null;
+
             if (!(value is ButtonInfo)) {
                 throw new ArgumentException();
             }
