@@ -75,6 +75,7 @@ namespace AppTray.ViewModels {
                     new RelayCommand(() => {
                         _buttonInfo.NextPage();
                         RaisePropertyChanged(nameof(ButtonInfo));
+                        RaisePropertyChanged(nameof(CurrentPageNo));
                     })
                 },
                 {
@@ -82,6 +83,7 @@ namespace AppTray.ViewModels {
                     new RelayCommand(() => {
                         _buttonInfo.PreviousPage();
                         RaisePropertyChanged(nameof(ButtonInfo));
+                        RaisePropertyChanged(nameof(CurrentPageNo));
                     })
                 },
                 {

@@ -15,6 +15,7 @@
                 <ResourceDictionary Source="/Style/ApplicationButtonStyle.xaml" />
                 <ResourceDictionary Source="/Style/CaptionButtonStyle.xaml" />
                 <ResourceDictionary Source="/Style/CheckBoxStyle.xaml" />
+                <ResourceDictionary Source="/Style/AutoCompleteTextBoxStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <!--<Style x:Key="WhiteText" TargetType="{x:Type TextBlock}">

@@ -1,0 +1,31 @@
+﻿<UserControl
+    x:Class="AppTray.Views.UserControls.ApplicationButton"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="clr-namespace:AppTray.Views.Behaviors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:AppTray.Views.UserControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="60"
+    d:DesignWidth="60"
+    mc:Ignorable="d">
+    <Button
+        x:Name="buttonApp"
+        Background="Black"
+        Command="{Binding ExecuteAppCommand}"
+        CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
+        Opacity="{Binding Opacity.Value}"
+        Style="{StaticResource ApplicationButton}">
+        <i:Interaction.Behaviors>
+            <b:FileDropBehavior ButtonNo="{Binding Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" FileDropCommand="{Binding FileDropCommand}" />
+            <b:DragStartBehavior
+                AllowedEffects="Move"
+                CurrentPageNo="{Binding CurrentPageNo}"
+                DragDropData="{Binding Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}"
+                DragedButtonNo="{Binding DragedButtonNo, Mode=TwoWay}"
+                DummyDragControl="{Binding ElementName=dummyButton}"
+                MovePagePanelZIndex="{Binding MovePagePanelZIndex, Mode=TwoWay}" />
+        </i:Interaction.Behaviors>
+    </Button>
+</UserControl>

@@ -36,6 +36,7 @@
                                 Grid.Row="1"
                                 Margin="2,0,2,0"
                                 Foreground="{StaticResource NormalTextBlockBrash}"
+                                TextTrimming="CharacterEllipsis"
                                 TextWrapping="Wrap"
                                 ToolTip="{Binding Path=Text, RelativeSource={RelativeSource Self}}"
                                 ToolTipService.IsEnabled="True">
@@ -46,7 +47,14 @@
                                     </MultiBinding>
                                 </TextBlock.Text>
                                 <i:Interaction.Behaviors>
-                                    <b:ButtonToolTipBehavior />
+                                    <b:ButtonToolTipBehavior RowCount="2">
+                                        <b:ButtonToolTipBehavior.TextOriginal>
+                                            <MultiBinding Converter="{c:ApplicationNameMultiBindConverter}">
+                                                <Binding Path="ButtonInfo" />
+                                                <Binding Path="Tag" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Button}}" />
+                                            </MultiBinding>
+                                        </b:ButtonToolTipBehavior.TextOriginal>
+                                    </b:ButtonToolTipBehavior>
                                 </i:Interaction.Behaviors>
                             </TextBlock>
                         </Grid>

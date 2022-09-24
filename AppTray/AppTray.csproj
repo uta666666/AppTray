@@ -165,7 +165,15 @@
     <Compile Include="Views\SystemSettingWindow.xaml.cs">
       <DependentUpon>SystemSettingWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\ApplicationButton.xaml.cs">
+      <DependentUpon>ApplicationButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\AutoGrid.cs" />
     <Page Include="Style\ApplicationButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Style\AutoCompleteTextBoxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -240,6 +248,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SystemSettingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\ApplicationButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

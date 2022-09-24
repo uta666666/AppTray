@@ -98,36 +98,15 @@
                     Padding="10,2,15,2"
                     VerticalAlignment="Stretch"
                     Foreground="WhiteSmoke"
-                    IsTextCompletionEnabled="True"
                     ItemFilter="{Binding ButtonInfoFilter}"
                     ItemsSource="{Binding ButtonInfo, Converter={c:ApplicationInfoForAutoCompleteConverter}}"
+                    Style="{StaticResource AutoCompleteTextBox}"
                     ValueMemberBinding="{Binding AppDisplayName}"
                     WindowChrome.IsHitTestVisibleInChrome="True">
                     <i:Interaction.Behaviors>
                         <b:ExecuteSelectedAppBehavior Command="{Binding ExecuteAppFromAppNameCommand}" />
                         <b:WaterMarkBehavior />
                     </i:Interaction.Behaviors>
-                    <toolkit:AutoCompleteBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Image
-                                    x:Name="image"
-                                    Grid.Column="0"
-                                    Width="20"
-                                    Height="20"
-                                    Margin="5,10,10,10"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Source="{Binding ImageSource}" />
-                                <TextBlock
-                                    Width="245"
-                                    VerticalAlignment="Center"
-                                    Foreground="WhiteSmoke"
-                                    Text="{Binding AppDisplayName}"
-                                    TextTrimming="CharacterEllipsis" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </toolkit:AutoCompleteBox.ItemTemplate>
                     <toolkit:AutoCompleteBox.Background>
                         <ImageBrush
                             AlignmentX="Right"
