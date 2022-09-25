@@ -265,6 +265,7 @@ namespace AppTray.ViewModels {
                     var returnValue = vm.Return();
                     StaticValues.SystemSetting.IsOpenOnTaskBar = returnValue.settings.IsOpenOnTaskBar;
                     StaticValues.SystemSetting.Opacity = returnValue.settings.Opacity;
+                    StaticValues.SystemSetting.IsSearchInStartMenu = returnValue.settings.IsSearchInStartMenu;
                     StaticValues.SystemSetting.Save(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location));
                     //RaisePropertyChanged(nameof(Opacity));
                 }
@@ -612,14 +613,17 @@ namespace AppTray.ViewModels {
         /// </summary>
         public DragAcceptDescription Description { get { return _description; } }
 
+
         /// <summary>
         /// AutoCompleteフィルタリング情報 
         /// </summary>
-        public AutoCompleteFilterPredicate<object> ButtonInfoFilter {
-            get {
-                return (searchText, obj) => {
-                    CompareInfo ci = CultureInfo.CurrentCulture.CompareInfo;
-                    return ci.IndexOf((obj as AppInfo).AppDisplayName, searchText, CompareOptions.IgnoreWidth | CompareOptions.IgnoreCase | CompareOptions.IgnoreKanaType) >= 0;
+        public AutoCompleteFilterPredicate<object> ButtonInfoFilter
+        {
+            get
+            {
+                return (searchText, obj) =>
+                {
+                    return FilteringMethod.Run(searchText, obj);
                 };
             }
         }

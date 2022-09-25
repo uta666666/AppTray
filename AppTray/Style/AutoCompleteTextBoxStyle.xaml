@@ -21,7 +21,7 @@
                             VerticalAlignment="Center"
                             Source="{Binding ImageSource}" />
                         <TextBlock
-                            Width="245"
+                            Width="225"
                             VerticalAlignment="Center"
                             Foreground="WhiteSmoke"
                             Text="{Binding AppDisplayName}"

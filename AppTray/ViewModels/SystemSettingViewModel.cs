@@ -17,6 +17,7 @@ namespace AppTray.ViewModels
         {
             IsOpenOnTaskBar = new ReactiveProperty<bool>();
             Opacity = new ReactiveProperty<double>();
+            IsSearchInStartMenu = new ReactiveProperty<bool>();
             CanClose = new ReactiveProperty<bool>();
 
             OKCommand = new ReactiveCommand();
@@ -30,6 +31,10 @@ namespace AppTray.ViewModels
 
             OKCommand.Subscribe(() =>
             {
+                if (IsSearchInStartMenu.Value != setting.IsSearchInStartMenu)
+                {
+                    Messenger.Raise(new InformationMessage("検索対象が変更されました。アプリを再起動してください。\r\n再起動後に変更が反映されます。", "情報", System.Windows.MessageBoxImage.Information, "InformationMessageKey"));
+                }
                 IsUpdate = true;
                 CanClose.Value = true;
             });
@@ -60,6 +65,7 @@ namespace AppTray.ViewModels
         {
             IsOpenOnTaskBar.Value = setting.IsOpenOnTaskBar;
             Opacity.Value = setting.Opacity;
+            IsSearchInStartMenu.Value = setting.IsSearchInStartMenu;
         }
 
 
@@ -68,7 +74,8 @@ namespace AppTray.ViewModels
             var sysSettings = new SystemSetting()
             {
                 IsOpenOnTaskBar = IsOpenOnTaskBar.Value,
-                Opacity = Opacity.Value
+                Opacity = Opacity.Value,
+                IsSearchInStartMenu = IsSearchInStartMenu.Value
             };
 
             return (sysSettings, _hotKey);
@@ -83,6 +90,7 @@ namespace AppTray.ViewModels
 
         public ReactiveProperty<bool> IsOpenOnTaskBar { get; set; }
         public ReactiveProperty<double> Opacity { get; set; }
+        public ReactiveProperty<bool> IsSearchInStartMenu { get; set; }
         public ReactiveProperty<bool> CanClose { get; set; }
 
         public bool IsUpdate { get; private set; }

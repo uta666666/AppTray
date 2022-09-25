@@ -24,16 +24,24 @@ namespace AppTray.Models
             }
             _buttonInfo = _buttonInfoAllPage[_currentPageNo];
             _maxPageCount = _buttonInfoAllPage.Max(n => n.Key);
+
+            _installedAppInfo = new StartMenuAppInfo();
         }
 
         private Dictionary<int, Dictionary<int, AppInfo>> _buttonInfoAllPage;
         private Dictionary<int, AppInfo> _buttonInfo;
         private int _maxPageCount;
         private int _currentPageNo;
+        private StartMenuAppInfo _installedAppInfo;
 
         public Dictionary<int, Dictionary<int, AppInfo>> GetButtonInfoAllPage()
         {
             return _buttonInfoAllPage;
+        }
+
+        public List<AppInfo> GetInstalledAppInfo()
+        {
+            return _installedAppInfo.AppInfo;
         }
 
         public Dictionary<int, Dictionary<int, AppInfo>> Load(string directory)

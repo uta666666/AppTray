@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -61,6 +62,7 @@
       <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Reactive, Version=5.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
@@ -119,8 +121,10 @@
     <Compile Include="Models\AppInfoLink.cs" />
     <Compile Include="Models\FolderInfo.cs" />
     <Compile Include="Models\HotKey.cs" />
+    <Compile Include="Models\StartMenuAppInfo.cs" />
     <Compile Include="Models\SystemSetting.cs" />
     <Compile Include="ViewModels\CommandViewModel.cs" />
+    <Compile Include="ViewModels\FilteringMethod.cs" />
     <Compile Include="ViewModels\HotKeySettingViewModel.cs" />
     <Compile Include="ViewModels\BaseSettingViewModel.cs" />
     <Compile Include="ViewModels\MiniViewModel.cs" />

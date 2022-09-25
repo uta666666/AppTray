@@ -26,6 +26,9 @@ namespace AppTray.Views.Converters {
                 }
                 unionList = unionList.Concat(apps);
             }
+
+            unionList = unionList.Concat((value as ButtonInfo).GetInstalledAppInfo());
+
             return unionList.Distinct(n => n.AppDisplayName);
         }
 

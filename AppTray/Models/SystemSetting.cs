@@ -36,6 +36,19 @@ namespace AppTray.Models
             }
         }
 
+        private bool _isSearchInStartMenu;
+        public bool IsSearchInStartMenu
+        {
+            get
+            {
+                return _isSearchInStartMenu;
+            }
+            set
+            {
+                SetProperty(ref _isSearchInStartMenu, value);
+            }
+        }
+
         public SystemSetting Load(string directory)
         {
             string settingFile = Path.Combine(directory, "syssettings.json");
