@@ -5,25 +5,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Text.RegularExpressions;
 
 namespace AppTray.Models
 {
     public class AppInfoLink : AppInfo
     {
-        public AppInfoLink() : base(){ }
+        public AppInfoLink() : base() { }
 
         public AppInfoLink(string filePath) : base()
         {
             var objShortcut = LoadLink(filePath);
-            if (File.Exists(objShortcut.TargetPath))
+            string fullFilePath = ReplaceEnvironmentValue(objShortcut.TargetPath);
+            if (File.Exists(fullFilePath))
             {
-                FilePath = objShortcut.TargetPath;
-                Arguments = objShortcut.Arguments;
+                FilePath = fullFilePath;
+                Arguments = ReplaceEnvironmentValue(objShortcut.Arguments);
                 WorkDirectory = objShortcut.WorkingDirectory;
             }
             else
             {
-                FilePath = filePath;
+                FilePath = fullFilePath;
             }
             AppDisplayName = Path.GetFileNameWithoutExtension(filePath);
             SetIconAndBitmapSource(FilePath);
@@ -34,6 +36,22 @@ namespace AppTray.Models
             var shell = new IWshRuntimeLibrary.WshShell();
             var objShortcut = shell.CreateShortcut(filePath) as IWshRuntimeLibrary.IWshShortcut;
             return objShortcut;
+        }
+
+        private string ReplaceEnvironmentValue(string src)
+        {
+            Regex regex = new Regex("%.+%");
+            var mutches = regex.Matches(src);
+            foreach (Match match in mutches)
+            {
+                if (!match.Success)
+                {
+                    continue;
+                }
+                string envVal = Environment.GetEnvironmentVariable(match.Value.Trim('%'));
+                src = src.Replace(match.Value, envVal);
+            }
+            return src;
         }
     }
 }
