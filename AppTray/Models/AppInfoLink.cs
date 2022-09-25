@@ -21,7 +21,8 @@ namespace AppTray.Models
             {
                 FilePath = fullFilePath;
                 Arguments = ReplaceEnvironmentValue(objShortcut.Arguments);
-                WorkDirectory = objShortcut.WorkingDirectory;
+                Arguments = ReplaceEnvironmentValue(objShortcut.Arguments);
+                WorkDirectory = ReplaceEnvironmentValue(objShortcut.WorkingDirectory);
             }
             else
             {
