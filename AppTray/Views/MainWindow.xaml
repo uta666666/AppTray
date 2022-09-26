@@ -143,14 +143,12 @@
                 Background="Black"
                 Foreground="DimGray"
                 Opacity="{Binding Opacity.Value}">
-                <!--
-                    <MenuItem
-                        Command="{Binding ApplicationCloseCommand}"
-                        CommandParameter="{Binding ElementName=MainWindow1}"
-                        Foreground="{StaticResource MenuItemForegroundBrush}"
-                        Header="閉じる"
-                        InputGestureText="Alt+F4" />
-                </MenuItem>-->
+
+                <MenuItem
+                    Command="{Binding ApplicationCloseCommand}"
+                    CommandParameter="{Binding ElementName=MainWindow1}"
+                    Header="閉じる(_W)"
+                    InputGestureText="Alt+F4" />
                 <MenuItem Header="ページ(_P)">
                     <MenuItem
                         Command="{Binding MovePageCommand}"

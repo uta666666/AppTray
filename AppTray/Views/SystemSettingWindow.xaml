@@ -107,7 +107,7 @@
                     Grid.Row="1"
                     Margin="20,0,0,0"
                     VerticalAlignment="Center"
-                    Content="インストール済みシステムを検索する"
+                    Content="スタートメニューのシステムを検索する"
                     IsChecked="{Binding IsSearchInStartMenu.Value}" />
             </GroupBox>
 
