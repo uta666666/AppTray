@@ -252,3 +252,5 @@ paket-files/
 *.sln.iml
 /MyGridLauncher/Views/Behaviors/MenuItemClickBehavior.cs
 /MyGridLauncher/Views/Behaviors/MenuItemClickBehavior.cs
+/AppTray/グリッド１.ico
+/AppTray/グリッド２.ico

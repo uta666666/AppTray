@@ -26,7 +26,7 @@ namespace AppTray.Models
             }
             else
             {
-                FilePath = fullFilePath;
+                FilePath = filePath;
             }
             AppDisplayName = Path.GetFileNameWithoutExtension(filePath);
             SetIconAndBitmapSource(FilePath);
