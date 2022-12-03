@@ -118,7 +118,7 @@
                     </toolkit:AutoCompleteBox.Background>
                 </toolkit:AutoCompleteBox>
 
-                <StackPanel
+                <!--<StackPanel
                     Grid.Column="2"
                     Height="30"
                     Margin="0"
@@ -135,7 +135,7 @@
                         Content="r"
                         FontSize="20"
                         Style="{DynamicResource CaptionCloseButtonStyleKey}" />
-                </StackPanel>
+                </StackPanel>-->
             </Grid>
 
             <Menu
